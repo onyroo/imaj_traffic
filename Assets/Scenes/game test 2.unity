@@ -785,7 +785,7 @@ MonoBehaviour:
   - {fileID: 1057433270}
   - {fileID: 1322282175}
   - {fileID: 1048965702}
-  carSpawnDelayRange: {x: 0.6, y: 2}
+  carSpawnDelayRange: {x: 0.6, y: 3}
   sideSpawnPointA: {fileID: 788432104}
   sideSpawnPointB: {fileID: 497795188}
   cooldownSpawn: 4

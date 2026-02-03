@@ -13,6 +13,7 @@ public class PlayerMovementRoadGame : MonoBehaviour
     [SerializeField] private float deceleration = 25f;
     [SerializeField] private float maxSpeedNormal = 6f;
     [SerializeField] private float maxSpeedWithGrandma = 4f;
+    [SerializeField] private float speedOnSafeWay = 1.5f;
     [SerializeField] private float rotationSpeed = 12f;
 
     [Header("Refs")]
@@ -65,7 +66,7 @@ public class PlayerMovementRoadGame : MonoBehaviour
         float dt = Time.fixedDeltaTime;
 
         // Target velocity
-        Vector3 targetVel = new Vector3(moveInput.x, 0f, moveInput.y) * (((SafeWay)?1.5f:1) *maxSpeed);
+        Vector3 targetVel = new Vector3(moveInput.x, 0f, moveInput.y) * (((SafeWay)?speedOnSafeWay:1) *maxSpeed);
 
         // Accel / Decel
         if (moveInput.sqrMagnitude > 0.01f)
