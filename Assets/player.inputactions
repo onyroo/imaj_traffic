@@ -1,0 +1,221 @@
+{
+    "version": 1,
+    "name": "player",
+    "maps": [
+        {
+            "name": "test",
+            "id": "3559258d-8c0b-4bf9-89a1-d01c0473cc64",
+            "actions": [
+                {
+                    "name": "check",
+                    "type": "Button",
+                    "id": "87a2252d-bd81-439c-a489-4276c041b570",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "1d87c2a6-2320-4b0b-a737-e94b0100005c",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "check",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Crossy",
+            "id": "ff3359d2-919e-46f9-8f3c-3bd79dcbf804",
+            "actions": [
+                {
+                    "name": "right",
+                    "type": "Button",
+                    "id": "cb061329-0e6f-4a45-93b9-61d175c21887",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "up",
+                    "type": "Button",
+                    "id": "8dc7b3b1-30a7-46c0-8d18-c1bccc844c3c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "left",
+                    "type": "Button",
+                    "id": "43541f46-c501-464c-984d-ceb4cc57d588",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "eb88006d-e01f-41e0-9268-78007709b09f",
+                    "path": "<Gamepad>/dpad/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "right",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "adfdb00c-5416-4d7e-ac8c-85fefc3d197d",
+                    "path": "<Gamepad>/dpad/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "up",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f48d928a-54c7-41d3-a528-cf5fa7b45ef1",
+                    "path": "<Gamepad>/dpad/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "left",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Grandma",
+            "id": "52283f7d-fda9-4f33-bf9e-b227a31b0ca9",
+            "actions": [
+                {
+                    "name": "Player",
+                    "type": "Value",
+                    "id": "bd0141d3-fce0-433b-9450-f790681ef478",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "grandmaDown",
+                    "type": "Button",
+                    "id": "f10393ab-15b9-42a8-a93b-0a6a3f611418",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "rotation",
+                    "type": "Value",
+                    "id": "b044cf1f-6f87-4b71-b2e6-66262760873a",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "3e1cf69b-6e0a-4219-bdee-812fd80bd603",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Player",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b0719ae6-4971-455f-8cc4-b63ecb789065",
+                    "path": "<Gamepad>/dpad",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Player",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "41edb9db-9785-4877-a351-13201a718460",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "grandmaDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e143b731-14a8-4512-ab0c-51b71d3ff590",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "rotation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "parcking",
+            "id": "778178e0-c2c8-4c43-9ec9-280b661a0e4c",
+            "actions": [
+                {
+                    "name": "car player",
+                    "type": "Value",
+                    "id": "3c02a54b-da3b-4675-9819-f6530c6733e6",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "db88c99d-24f9-424a-996c-82a5de57522a",
+                    "path": "<Gamepad>/dpad",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "car player",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c44b1099-0da0-446c-a980-226017280c6a",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "car player",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
