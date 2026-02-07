@@ -21,19 +21,26 @@ public class PlayerInputObject : MonoBehaviour
 	public void OnRight(InputAction.CallbackContext ctx)
 	{
 	if(!ctx.performed) return;
-	IntersectionGameManager.Instance.OnClicked(playerId,1);
+	CrossRoadGameManager.Instance.OnClicked(playerId,1);
 	// Debug.Log("Clicked : " + playerId.ToString());
 	}
 	public void OnUp(InputAction.CallbackContext ctx)
 	{
 	if(!ctx.performed) return;
-	IntersectionGameManager.Instance.OnClicked(playerId,2);
+	CrossRoadGameManager.Instance.OnClicked(playerId,2);
 	// Debug.Log("Clicked : " + playerId.ToString());
 	}
 	public void OnLeft(InputAction.CallbackContext ctx)
 	{
 	if(!ctx.performed) return;
-	IntersectionGameManager.Instance.OnClicked(playerId,3);
+	CrossRoadGameManager.Instance.OnClicked(playerId,3);
+	// Debug.Log("Clicked : " + playerId.ToString());
+
+	}
+	public void OnDown(InputAction.CallbackContext ctx)
+	{
+	if(!ctx.performed) return;
+	CrossRoadGameManager.Instance.OnClicked(playerId,0);
 	// Debug.Log("Clicked : " + playerId.ToString());
 
 	}

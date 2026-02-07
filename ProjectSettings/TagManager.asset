@@ -10,6 +10,7 @@ TagManager:
   - car
   - side
   - SafeWay
+  - destroy
   layers:
   - Default
   - TransparentFX
