@@ -13,7 +13,7 @@ public class GrandmaProperty : MonoBehaviour
     [SerializeField] float rayDistance = 1.2f;
     [SerializeField] float edgeAvoidStrength = 2.5f;
     [SerializeField] float reachCenterDistance = 0.6f;
-
+    [SerializeField] private Animator anim;
     Vector3 moveDir;
     bool forceReturnToCenter;
 
@@ -27,8 +27,16 @@ public class GrandmaProperty : MonoBehaviour
 
     private void Start()
     {
+        
+        anim.SetInteger("walk",1);
         setPlayerParent();
     }
+    public Animator animReturn()
+    {
+       return anim; 
+    }
+     
+    
     public void setPlayerParent()
     {
         sideCenter = side == 0
@@ -45,6 +53,7 @@ public class GrandmaProperty : MonoBehaviour
                  setPlayerParent();
                 //  GrandmaGameManager.Instance.ResetGrandmaPosition(transform,side);
             }
+
             
         }
         else if(other.CompareTag("car"))
@@ -56,11 +65,12 @@ public class GrandmaProperty : MonoBehaviour
             GrandmaGameManager.Instance.ResetGrandmaPosition(transform,side);
             setPlayerParent();
         }
+        
     } 
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("side"))
+        if (other.CompareTag("Respawn"))
             forceReturnToCenter = true;
     }
 
