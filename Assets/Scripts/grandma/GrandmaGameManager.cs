@@ -328,7 +328,7 @@ private IEnumerator CarGenerator()
 
     private void UpdateScoreUI()
     {
-        if (bluePlayerText) bluePlayerText.text = $"Blue: {bluePlayerScore}";
-        if (redPlayerText) redPlayerText.text = $"Red: {redPlayerScore}";
+        if (bluePlayerText) bluePlayerText.text = $"{bluePlayerScore}";
+        if (redPlayerText) redPlayerText.text = $"{redPlayerScore}";
     }
 }
