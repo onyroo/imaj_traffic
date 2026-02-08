@@ -16,7 +16,8 @@ public class PlayerMovementRoadGame : MonoBehaviour
     [SerializeField] private float maxSpeedNormal = 6f;
     [SerializeField] private float maxSpeedWithGrandma = 4f;
     [SerializeField] private float speedOnSafeWay = 1.5f;
-
+    [SerializeField] private Renderer r;
+    [SerializeField] private Texture t1,t2;
     [SerializeField] private float rotationSpeed = 12f;
     [SerializeField] private Animator anim;
     private int countCall;
@@ -61,6 +62,8 @@ public class PlayerMovementRoadGame : MonoBehaviour
             rb.position = GrandmaGameManager.Instance.player2ResetPoint.position;
             GrandmaGameManager.Instance.player2 = body;
         }
+         
+        r.material.mainTexture =(playerId==0)?t1:t2;
         // anim=GetComponent<Animator>();
         StartIdleRumbleIfAllowed();
     }

@@ -311,7 +311,7 @@ private IEnumerator CarGenerator()
 
     public void AddScore(int side, int amount = 1)
     {
-        if (side == 1)
+        if (side == 0)
         {
             redPlayerScore += amount;
             if(redPlayerScore<0)

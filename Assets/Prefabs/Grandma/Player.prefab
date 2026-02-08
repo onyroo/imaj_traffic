@@ -57,6 +57,9 @@ MonoBehaviour:
   maxSpeedNormal: 6
   maxSpeedWithGrandma: 4
   speedOnSafeWay: 1.5
+  r: {fileID: 8732662757651300418}
+  t1: {fileID: 2800000, guid: fa527927897197a47bb12f2803485098, type: 3}
+  t2: {fileID: 2800000, guid: a93272bdb25c389419212e9873a4ef26, type: 3}
   rotationSpeed: 8
   anim: {fileID: 398589296455404816}
   body: {fileID: 290005014989340844}
@@ -227,7 +230,7 @@ CapsuleCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -940,3 +943,8 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!137 &8732662757651300418 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2227627929112842103, guid: 0923e56ec4e26034abd76cc5d313b319, type: 3}
+  m_PrefabInstance: {fileID: 7483497476085010229}
+  m_PrefabAsset: {fileID: 0}
