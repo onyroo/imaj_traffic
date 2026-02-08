@@ -9,7 +9,7 @@ public class PlayerMovementRoadGame : MonoBehaviour
     public bool canMove = true;
     [Header("Input")]
     [SerializeField] private PlayerInput playerInput;
-
+    [SerializeField] private Collider cl;
     [Header("Movement")]
     [SerializeField] private float acceleration = 20f;
     [SerializeField] private float deceleration = 25f;
@@ -111,11 +111,23 @@ public class PlayerMovementRoadGame : MonoBehaviour
 
     Transform grandmaEnemy;
     Animator grandmaAnim;
+    [SerializeField]private float grandmaTheftCoolown=1;
+    public bool canTheft=true;
+    void doCoolDownGrandaTheft()
+    {
+        canTheft=true;
+    }
     void takeGrandma()
     {
         if (grandmaEnemy == null) return;
         if (grandmaEnemy.parent != null)
         {
+            if(!grandmaEnemy.parent.GetComponent<PlayerMovementRoadGame>().canTheft)
+            {
+                return;
+            }
+            canTheft=false;
+            Invoke("doCoolDownGrandaTheft",grandmaTheftCoolown);
             grandmaEnemy.parent.GetComponent<PlayerMovementRoadGame>().grandmaTakeDown();
         }
         GrandmaProperty gp = grandmaEnemy.GetComponent<GrandmaProperty>();
@@ -130,6 +142,8 @@ public class PlayerMovementRoadGame : MonoBehaviour
 
         hasGrandma = true;
         gp.side = playerId;
+            cl.enabled=true;
+
         gp.setPlayerParent();
         maxSpeed = maxSpeedWithGrandma;
         grandma.SetParent(transform);
@@ -236,6 +250,7 @@ public class PlayerMovementRoadGame : MonoBehaviour
             grandma.GetComponent<GrandmaProperty>().canMove = true;
             grandma.GetComponent<GrandmaProperty>().setPlayerParent();
             grandma=null;
+            cl.enabled=false;
 
         }
     }
@@ -256,6 +271,7 @@ public class PlayerMovementRoadGame : MonoBehaviour
 
         grandmaAnim.SetInteger("walk",1);
         grandma=null;
+        cl.enabled=false;
     }
 
     // ---------- RUMBLE / CONTROLLER HELPERS ----------
