@@ -70,12 +70,7 @@ public class PlayerMovementRoadGame : MonoBehaviour
         moveInput = ctx.ReadValue<Vector2>();
     }
 
-    Vector2 rotInput = new Vector2();
-    public void OnRotate(InputAction.CallbackContext ctx)
-    {
-        rotInput = ctx.ReadValue<Vector2>();
-    }
-
+  
     private void FixedUpdate()
     {
         if (!canMove) return;
@@ -102,13 +97,15 @@ public class PlayerMovementRoadGame : MonoBehaviour
         rb.linearVelocity=Vector3.zero;
         rb.MovePosition(rb.position + velocity * dt);
 
-        Vector3 lookDir = new Vector3(rotInput.x, 0, rotInput.y);
+        Vector3 lookDir = new Vector3(moveInput.x, 0, moveInput.y);
         lookDir.y = 0f;
 
         if (lookDir.sqrMagnitude > 0.001f)
         {
             Quaternion targetRot = Quaternion.LookRotation(lookDir.normalized);
             body.rotation = Quaternion.Slerp(body.rotation, targetRot, rotationSpeed * dt);
+            if(grandma)
+                grandma.rotation=body.rotation;
         }
     }
 
@@ -126,7 +123,7 @@ public class PlayerMovementRoadGame : MonoBehaviour
         grandma = grandmaEnemy;
         grandma.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         gp.canMove = false;
-        if (playerId==0)
+        if (playerId==1)
             grandma.rotation = Quaternion.Euler(0,0,0);
         else
             grandma.rotation = Quaternion.Euler(0,180,0);
@@ -146,9 +143,11 @@ public class PlayerMovementRoadGame : MonoBehaviour
             canMove = false;
             GrandmaGameManager.Instance.ResetPlayerPosition(transform, playerId);
             if (hasGrandma)
-                GrandmaGameManager.Instance.ResetGrandmaPosition(grandma, playerId);
+                GrandmaGameManager.Instance.ResetGrandmaPosition(grandma
+                , grandma.GetComponent<GrandmaProperty>().lastSide
+                ,playerId);
 
-            GrandmaGameManager.Instance.AddPlayerToDied();
+            GrandmaGameManager.Instance.AddPlayerToDied(gameObject);
  
             StartShortRumble(0.5f, 0.9f, 0.9f); // intense 1s rumble
 
@@ -158,6 +157,20 @@ public class PlayerMovementRoadGame : MonoBehaviour
         {
             countCall++;
             StopIdleRumble(); // in side -> no idle rumble
+            if(other.name==playerId.ToString())
+            {
+
+            if(hasGrandma&&
+            other.name!=grandma.GetComponent<GrandmaProperty>().lastSide.ToString())
+            {
+            // Debug.Log(grandma.GetComponent<GrandmaProperty>().side.ToString());
+            grandma.GetComponent<GrandmaProperty>().lastSide=playerId;
+            GrandmaGameManager.Instance.AddScore(playerId,10+((safeWayScore)?5:0));
+            }
+ 
+            }
+            safeWayScore=true;
+            
         }
         else if (other.CompareTag("SafeWay"))
         {
@@ -170,7 +183,7 @@ public class PlayerMovementRoadGame : MonoBehaviour
             grandmaEnemy = other.transform;
         }
     }
-
+    bool safeWayScore;
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("SafeWay"))
@@ -178,7 +191,13 @@ public class PlayerMovementRoadGame : MonoBehaviour
             countCall = Mathf.Max(0, countCall - 1);
             SafeWay = false;
             if (countCall == 0)
+            {
                 StartIdleRumbleIfAllowed();
+                if(hasGrandma)
+                {
+                  safeWayScore=false;  
+                }
+            }
         }
         else if (other.CompareTag("grandma") && grandmaEnemy == other.transform)
         {
@@ -190,6 +209,10 @@ public class PlayerMovementRoadGame : MonoBehaviour
             if (countCall == 0)
             {
                 StartIdleRumbleIfAllowed();
+                if(hasGrandma)
+                {
+                  safeWayScore=false;  
+                }
             }
         }
     }
@@ -212,6 +235,7 @@ public class PlayerMovementRoadGame : MonoBehaviour
             maxSpeed = maxSpeedNormal;
             grandma.GetComponent<GrandmaProperty>().canMove = true;
             grandma.GetComponent<GrandmaProperty>().setPlayerParent();
+            grandma=null;
 
         }
     }
@@ -228,8 +252,10 @@ public class PlayerMovementRoadGame : MonoBehaviour
         maxSpeed = maxSpeedNormal;
         grandma.GetComponent<GrandmaProperty>().canMove = true;
         grandma.GetComponent<GrandmaProperty>().setPlayerParent();
+        
 
         grandmaAnim.SetInteger("walk",1);
+        grandma=null;
     }
 
     // ---------- RUMBLE / CONTROLLER HELPERS ----------

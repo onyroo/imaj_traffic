@@ -67,7 +67,7 @@ GameObject:
   - component: {fileID: 7255876133833361932}
   - component: {fileID: 404200220012158976}
   - component: {fileID: 1681045133440737896}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: 'Grandma '
   m_TagString: grandma
   m_Icon: {fileID: 0}
@@ -182,6 +182,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   side: 0
+  lastSide: 0
   canMove: 1
   moveSpeed: 2
   turnSmooth: 4

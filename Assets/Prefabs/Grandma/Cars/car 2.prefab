@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2326598489466342991}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: wheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7382489974368689236}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -77,7 +77,7 @@ GameObject:
   - component: {fileID: 5860749990725388364}
   - component: {fileID: 5849781997417876898}
   - component: {fileID: 5839500270127253980}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wheel_7E_F.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -167,7 +167,7 @@ GameObject:
   - component: {fileID: 5860749989924911496}
   - component: {fileID: 5849781996741666898}
   - component: {fileID: 5839500268292717480}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wheel_7E_F.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -258,7 +258,7 @@ GameObject:
   - component: {fileID: 5849781997850978432}
   - component: {fileID: 5839500269150767414}
   - component: {fileID: 5888732792032989594}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Car_7E
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -372,7 +372,7 @@ GameObject:
   - component: {fileID: 5860749988240104196}
   - component: {fileID: 5849781997596340528}
   - component: {fileID: 5839500271599652404}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wheel_7E_R.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -462,7 +462,7 @@ GameObject:
   - component: {fileID: 5860749990456572186}
   - component: {fileID: 5849781997074387088}
   - component: {fileID: 5839500270051746790}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wheel_7E_R.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -551,7 +551,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2292329166746880090}
   - component: {fileID: 1397270993262033677}
-  m_Layer: 0
+  - component: {fileID: 3579179728522238966}
+  m_Layer: 3
   m_Name: GameObject
   m_TagString: car
   m_Icon: {fileID: 0}
@@ -594,6 +595,27 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.1, y: 1, z: 1}
   m_Center: {x: 0, y: 0.2, z: 0}
+--- !u!65 &3579179728522238966
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7573334231455100647}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0.2, z: 0}
 --- !u!1 &8080308023583512600
 GameObject:
   m_ObjectHideFlags: 0
@@ -606,7 +628,7 @@ GameObject:
   - component: {fileID: 2949639823965206990}
   - component: {fileID: 2314441140988534870}
   - component: {fileID: 813579777007298289}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: car 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
