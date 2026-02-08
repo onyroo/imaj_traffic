@@ -166,6 +166,7 @@ public class CrossRoadGameManager : MonoBehaviour
     public void OnClicked(int playerId, int dir)
     {
         if (finish||turnPlayer!=playerId) return;
+         Debug.Log("hell");
          CrossRoadCar activeCar;
         if(playerId==0)
         {
@@ -186,7 +187,7 @@ public class CrossRoadGameManager : MonoBehaviour
         {
             dir=3;
         }
-
+        
         if (dir == activeCar.direction)
         {
             if (playerId == 0) redPlayerScore++;
@@ -199,6 +200,7 @@ public class CrossRoadGameManager : MonoBehaviour
         }
         bluePlayerTxt.text = bluePlayerScore.ToString();
         redPlayerTxt.text = redPlayerScore.ToString();
+        Debug.Log("what");
         if(dir==0)return;
         if(playerId==0)
         {

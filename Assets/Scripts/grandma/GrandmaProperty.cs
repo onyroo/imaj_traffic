@@ -4,6 +4,7 @@ using UnityEngine;
 public class GrandmaProperty : MonoBehaviour
 {
     public int side = 0;
+    public int lastSide = 0;
     public bool canMove = true;
 
     private Rigidbody rb;
@@ -29,32 +30,31 @@ public class GrandmaProperty : MonoBehaviour
     {
         
         anim.SetInteger("walk",1);
+        lastSide=side;
         setPlayerParent();
     }
     public Animator animReturn()
     {
        return anim; 
     }
-     
-    
+ 
     public void setPlayerParent()
     {
-        sideCenter = side == 0
+        sideCenter = lastSide == 0
             ? GrandmaGameManager.Instance.sideSpawnPointA
             : GrandmaGameManager.Instance.sideSpawnPointB;
     }
      private void OnTriggerEnter(Collider other) {
         if(other.CompareTag("side"))
         {
+            // if(transform.parent!=null)
+            //     lastSide=(other.name=="0")?0:1;
             if(other.name!=side.ToString())
             {
-                 GrandmaGameManager.Instance.AddScore(side,1);
-                 side=(side==0)?1:0;
+                 
                  setPlayerParent();
                 //  GrandmaGameManager.Instance.ResetGrandmaPosition(transform,side);
             }
-
-            
         }
         else if(other.CompareTag("car"))
         {
@@ -62,7 +62,7 @@ public class GrandmaProperty : MonoBehaviour
             {
                 transform.parent.gameObject.GetComponent<PlayerMovementRoadGame>().grandmaTakeDown();
             }
-            GrandmaGameManager.Instance.ResetGrandmaPosition(transform,side);
+            GrandmaGameManager.Instance.ResetGrandmaPosition(transform,lastSide,side);
             setPlayerParent();
         }
         

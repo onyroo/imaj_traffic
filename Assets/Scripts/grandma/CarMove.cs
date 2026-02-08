@@ -8,7 +8,7 @@ public class CarMove : MonoBehaviour
 
     float moveSpeed;
     float targetSpeed;
-    int c;
+    int c,v;
 
     void OnEnable()
     {
@@ -18,7 +18,18 @@ public class CarMove : MonoBehaviour
 
     void Update()
     {
-        moveSpeed = Mathf.Lerp(moveSpeed, targetSpeed, Time.deltaTime * 6f);
+        if(v>0&&c>0)
+        {
+        moveSpeed = Mathf.Lerp(moveSpeed, 0, Time.deltaTime * 15f);
+        }
+        else if(c>0||v>0)
+        {
+        moveSpeed = Mathf.Lerp(moveSpeed, 3, Time.deltaTime * 6f);
+        }
+        else 
+        {
+        moveSpeed = Mathf.Lerp(moveSpeed, targetSpeed, Time.deltaTime * 0.5f);
+        }
 
         Vector3 deltaMove = moveSpeed * transform.right * Time.deltaTime;
         transform.position += deltaMove;
@@ -36,23 +47,34 @@ public class CarMove : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("SafeWay") || other.CompareTag("car"))
+        if (other.CompareTag("car")||other.CompareTag("SafeWay"))
         {
-            targetSpeed = 3f;
+            // targetSpeed = 3f;
             c++;
+        }
+        if(other.CompareTag("car")||other.CompareTag("Player")
+        ||other.CompareTag("grandma"))
+        {
+            v++;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("SafeWay") || other.CompareTag("car"))
+        if (other.CompareTag("car")||other.CompareTag("SafeWay"))
         {
             c--;
             if (c <= 0)
             {
                 c = 0;
-                targetSpeed = 12f;
+                targetSpeed = Random.Range(limitMoveSpeed.x, limitMoveSpeed.y);
             }
+        }
+         
+        if(other.CompareTag("car")||other.CompareTag("Player")
+        ||other.CompareTag("grandma"))
+        {
+            v--;
         }
     }
 }

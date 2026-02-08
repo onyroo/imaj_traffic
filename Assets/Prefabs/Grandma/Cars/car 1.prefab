@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4276528230326744429}
   - component: {fileID: 4276528230329644365}
   - component: {fileID: 4276528230328645517}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Receiver_2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 4276528230326744431}
   - component: {fileID: 4276528230329644367}
   - component: {fileID: 4276528230328645519}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wheel_2D_R.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -191,7 +191,7 @@ GameObject:
   - component: {fileID: 4276528230326744433}
   - component: {fileID: 4276528230329644369}
   - component: {fileID: 4276528230328645521}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wheel_2D_R.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -281,7 +281,7 @@ GameObject:
   - component: {fileID: 4276528230326744435}
   - component: {fileID: 4276528230329644371}
   - component: {fileID: 4276528230328645523}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wheel_2D_F.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -371,7 +371,7 @@ GameObject:
   - component: {fileID: 4276528230326744437}
   - component: {fileID: 4276528230329644373}
   - component: {fileID: 4276528230328645525}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wheel_2D_F.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -461,7 +461,7 @@ GameObject:
   - component: {fileID: 4276528230326744439}
   - component: {fileID: 4276528230329644375}
   - component: {fileID: 4276528230328645527}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Livery_Door_2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -551,7 +551,7 @@ GameObject:
   - component: {fileID: 4276528230326744441}
   - component: {fileID: 4276528230329644377}
   - component: {fileID: 4276528230328645529}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Livery_2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -641,7 +641,7 @@ GameObject:
   - component: {fileID: 4276528230326744443}
   - component: {fileID: 4276528230329644379}
   - component: {fileID: 4276528230328645531}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Door_2D_R.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -732,7 +732,7 @@ GameObject:
   - component: {fileID: 4276528230326744445}
   - component: {fileID: 4276528230329644381}
   - component: {fileID: 4276528230328645533}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Door_2D_R.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -822,7 +822,7 @@ GameObject:
   - component: {fileID: 4276528230326744447}
   - component: {fileID: 4276528230329644383}
   - component: {fileID: 4276528230328645535}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Car_2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -916,7 +916,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3078641061281871453}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -949,7 +949,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5285368947318703239}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'wheel1 '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -983,7 +983,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2292329166746880090}
   - component: {fileID: 1397270993262033677}
-  m_Layer: 0
+  - component: {fileID: 2230793552989274981}
+  m_Layer: 3
   m_Name: GameObject
   m_TagString: car
   m_Icon: {fileID: 0}
@@ -1026,6 +1027,27 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.13, y: 1, z: 1}
   m_Center: {x: 0, y: 0.2, z: 0}
+--- !u!65 &2230793552989274981
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7573334231455100647}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.13, y: 1, z: 1}
+  m_Center: {x: 0, y: 0.2, z: 0}
 --- !u!1 &8080308023583512600
 GameObject:
   m_ObjectHideFlags: 0
@@ -1038,7 +1060,7 @@ GameObject:
   - component: {fileID: 2949639823965206990}
   - component: {fileID: 2314441140988534870}
   - component: {fileID: 813579777007298289}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: car 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

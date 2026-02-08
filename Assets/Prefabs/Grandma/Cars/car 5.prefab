@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6193355659015848731}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3741484344122158243}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -77,7 +77,7 @@ GameObject:
   - component: {fileID: 6609679984771376872}
   - component: {fileID: 6611640798774905720}
   - component: {fileID: 6621926923496016276}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Door_9A_R.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -167,7 +167,7 @@ GameObject:
   - component: {fileID: 6609679986729481990}
   - component: {fileID: 6611640798262256154}
   - component: {fileID: 6621926923739184452}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wheel_9A_F.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -258,7 +258,7 @@ GameObject:
   - component: {fileID: 6611640793125534302}
   - component: {fileID: 6621926923176803428}
   - component: {fileID: 6486616461595143180}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Light_Red_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -362,7 +362,7 @@ GameObject:
   - component: {fileID: 6621926921320377352}
   - component: {fileID: 6549917284757994966}
   - component: {fileID: 6581771965964288670}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Car_9A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -502,7 +502,7 @@ GameObject:
   - component: {fileID: 6609679986059297280}
   - component: {fileID: 6611640792289624644}
   - component: {fileID: 6621926923635377606}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wheel_9A_F.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -593,7 +593,7 @@ GameObject:
   - component: {fileID: 6611640799300191550}
   - component: {fileID: 6621926923753829532}
   - component: {fileID: 6486616458524013462}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Light_Red_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -695,7 +695,7 @@ GameObject:
   - component: {fileID: 6609679987682414642}
   - component: {fileID: 6611640792138598296}
   - component: {fileID: 6621926923239721270}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wheel_9A_R.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -785,7 +785,7 @@ GameObject:
   - component: {fileID: 6609679984969994242}
   - component: {fileID: 6611640798307872170}
   - component: {fileID: 6621926923261062786}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Door_9A_R.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -875,7 +875,7 @@ GameObject:
   - component: {fileID: 6609679986433437028}
   - component: {fileID: 6611640792354295748}
   - component: {fileID: 6621926926662948482}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wheel_9A_R.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -964,7 +964,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2292329166746880090}
   - component: {fileID: 1397270993262033677}
-  m_Layer: 0
+  - component: {fileID: 416165480184662962}
+  m_Layer: 3
   m_Name: GameObject
   m_TagString: car
   m_Icon: {fileID: 0}
@@ -1007,6 +1008,27 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.3, y: 1, z: 1}
   m_Center: {x: 0, y: 0.2, z: 0}
+--- !u!65 &416165480184662962
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7573334231455100647}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.3, y: 1, z: 1}
+  m_Center: {x: 0, y: 0.2, z: 0}
 --- !u!1 &8080308023583512600
 GameObject:
   m_ObjectHideFlags: 0
@@ -1019,7 +1041,7 @@ GameObject:
   - component: {fileID: 2949639823965206990}
   - component: {fileID: 2314441140988534870}
   - component: {fileID: 813579777007298289}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: car 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}

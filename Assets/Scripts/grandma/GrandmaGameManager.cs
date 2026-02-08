@@ -18,6 +18,7 @@ public class GrandmaGameManager : MonoBehaviour
     [SerializeField] private int grandmaSpawnCount = 3;
     [SerializeField] private GameObject grandmaPrefab;
 
+    [SerializeField] private LayerMask carLayer;
 
     [Header("Car Settings")]
     [SerializeField] private List<CarSpawnData> carSpawnDatas = new();
@@ -36,8 +37,12 @@ public class GrandmaGameManager : MonoBehaviour
     [Header("UI")]
     [SerializeField] private Text bluePlayerText;
     [SerializeField] private Text redPlayerText;
+    [SerializeField] private Text timeText;
     [SerializeField] private Camera cam;
-
+    [Header("scores")]
+    [SerializeField] private int playerDiedScore;
+    [SerializeField] private int grandmaDiedScore;
+    [SerializeField] private int timePlay=60;
     private int bluePlayerScore;
     private int redPlayerScore;
 
@@ -59,13 +64,14 @@ public class GrandmaGameManager : MonoBehaviour
         }
         Instance = this;
 
-        redPlayerScore = grandmaSpawnCount;
-        bluePlayerScore = grandmaSpawnCount;
+        redPlayerScore = 0;
+        bluePlayerScore = 0;
 
         SpawnGrandmas();
         UpdateScoreUI();
 
         StartCoroutine(CarGenerator());
+        StartCoroutine(timeMatch());
 
         startCamSize = cam.orthographicSize;
         startCamPos = cam.transform.position;
@@ -98,25 +104,97 @@ public class GrandmaGameManager : MonoBehaviour
             camSizeSpeed * Time.deltaTime
         );
     }
-
-    private IEnumerator CarGenerator()
+    private IEnumerator timeMatch()
     {
-        while (true)
+        float timer=timePlay;
+        while(timer>0)
         {
-            if (carSpawnDatas.Count > 0 && roads.Count > 0)
+        timeText.text=timer.ToString("F1");
+        timer-=Time.deltaTime;
+        yield return null;
+        }
+
+        Debug.Log("finish");
+        timeText.text="Thank u For Watching!!!!!!";
+        // yield return new WaitForSeconds(timePlay);
+         
+    }
+private IEnumerator CarGenerator()
+{
+    while (true)
+    {
+        if (carSpawnDatas.Count > 0 && roads.Count > 0)
+        {
+            GameObject prefab = GetRandomCarByChance();
+            if (prefab != null)
             {
-                GameObject prefab = GetRandomCarByChance();
-                if (prefab != null)
+                Transform road = roads[Random.Range(0, roads.Count)];
+
+                Vector3 boxCenter = road.position;
+                Vector3 boxHalfExtents = new Vector3(9f, 0.25f, 1f);
+
+                Collider[] hits = Physics.OverlapBox(
+                    boxCenter,
+                    boxHalfExtents,
+                    road.rotation,
+                    carLayer,  
+                    QueryTriggerInteraction.Collide  
+                );
+
+                bool hasCar = false;
+
+                foreach (var hit in hits)
                 {
-                    Transform road = roads[Random.Range(0, roads.Count)];
-                    GameObject car = Instantiate(prefab, road.position, road.rotation, road);
+                     
+                        hasCar = true;
+                        break;
+                    
+                }
+
+                if (!hasCar)
+                {
+                    GameObject car = Instantiate(
+                        prefab,
+                        road.position,
+                        road.rotation,
+                        road
+                    );
+
                     Destroy(car, 50f);
                 }
+                else{Debug.Log("dddddd");}
             }
-
-            yield return new WaitForSeconds(Random.Range(carSpawnDelayRange.x, carSpawnDelayRange.y));
         }
+
+        yield return new WaitForSeconds(
+            Random.Range(carSpawnDelayRange.x, carSpawnDelayRange.y)
+        );
     }
+}
+
+    private void OnDrawGizmosSelected()
+{
+    if (roads == null) return;
+
+    Gizmos.color = Color.red;
+
+    Vector3 boxHalfExtents = new Vector3(9f, 0.25f, 1f);
+
+    foreach (var road in roads)
+    {
+        if (!road) continue;
+
+        Gizmos.matrix = Matrix4x4.TRS(
+            road.position,
+            road.rotation,
+            Vector3.one
+        );
+
+        Gizmos.DrawWireCube(Vector3.zero, boxHalfExtents * 2f);
+    }
+}
+
+
 
     private GameObject GetRandomCarByChance()
     {
@@ -165,6 +243,7 @@ public class GrandmaGameManager : MonoBehaviour
 
     public void ResetPlayerPosition(Transform player, int side)
     {
+        AddScore(side,-playerDiedScore);
         player.GetChild(0).gameObject.SetActive(false);
         player.position = new Vector3(100, 0, 100);
         cldown.Add(StartCoroutine(Cooldown(player, side)));
@@ -180,9 +259,11 @@ public class GrandmaGameManager : MonoBehaviour
         player.GetChild(0).gameObject.SetActive(true);
         player.GetComponent<PlayerMovementRoadGame>().canMove = true;
     }
-
-    public void AddPlayerToDied()
+    GameObject p;
+    public void AddPlayerToDied(GameObject t)
     {
+        if(p!=null&&p==t)return;
+        p=t;
         if (onePlayerDead)
         {
             foreach (var c in cldown)
@@ -212,9 +293,11 @@ public class GrandmaGameManager : MonoBehaviour
         onePlayerDead = false;
     }
 
-    public void ResetGrandmaPosition(Transform grandma, int side)
+    public void ResetGrandmaPosition(Transform grandma, int side,int playerId)
     {
-        if(side==0)
+        AddScore(playerId,-grandmaDiedScore);
+        
+        if(playerId==0)
         {
           player1.parent.GetComponent<PlayerMovementRoadGame>().StartShortRumble(0.3f, 0.9f, 0.9f);  
         }
@@ -228,15 +311,17 @@ public class GrandmaGameManager : MonoBehaviour
 
     public void AddScore(int side, int amount = 1)
     {
-        if (side == 0)
+        if (side == 1)
         {
-            bluePlayerScore -= amount;
             redPlayerScore += amount;
+            if(redPlayerScore<0)
+                redPlayerScore=0;
         }
         else
         {
-            redPlayerScore -= amount;
             bluePlayerScore += amount;
+            if(bluePlayerScore<0)
+                bluePlayerScore=0;
         }
         UpdateScoreUI();
     }
