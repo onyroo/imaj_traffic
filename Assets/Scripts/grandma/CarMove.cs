@@ -57,6 +57,10 @@ public class CarMove : MonoBehaviour
         {
             v++;
         }
+        else if(other.CompareTag("destroy"))
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnTriggerExit(Collider other)

@@ -141,6 +141,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "attack",
+                    "type": "Button",
+                    "id": "685508b3-250d-4055-834c-4a8f19497030",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "rotation",
                     "type": "Value",
                     "id": "b044cf1f-6f87-4b71-b2e6-66262760873a",
@@ -181,6 +190,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "grandmaDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b331cf7d-3946-4ec7-850c-df44f1da7086",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

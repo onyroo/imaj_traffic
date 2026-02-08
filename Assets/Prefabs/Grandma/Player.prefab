@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4018300353529047178}
   - component: {fileID: 935495839337255704}
   - component: {fileID: 5400433291434952856}
-  - component: {fileID: 7934067381367619516}
+  - component: {fileID: 162883892338838993}
   - component: {fileID: 2985596680058361140}
   m_Layer: 0
   m_Name: Player
@@ -162,6 +162,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: e8f1e036-7889-4bc9-b1f3-4cf0c9299004
     m_ActionName: 'Crossy/down[/XInputControllerWindows1/dpad/down]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 685508b3-250d-4055-834c-4a8f19497030
+    m_ActionName: 'Grandma/attack[/XInputControllerWindows1/buttonNorth,/XInputControllerWindows2/buttonNorth]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Grandma
@@ -194,7 +198,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
---- !u!136 &7934067381367619516
+--- !u!136 &162883892338838993
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

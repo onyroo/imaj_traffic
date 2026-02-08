@@ -38,7 +38,7 @@ public class PlayerMovementRoadGame : MonoBehaviour
     bool SafeWay;
     Coroutine idleRumbleCoroutine;
     Coroutine shortRumbleCoroutine;
-
+    // bool damage=false;
     private void Awake()
     {
         StopAllCoroutines();
@@ -233,7 +233,17 @@ public class PlayerMovementRoadGame : MonoBehaviour
             }
         }
     }
+    // public void takeAttack(InputAction.CallbackContext ctx)
+    // {
+    //     if (ctx.started)
+    //     {
 
+    //     }
+    // }
+    // void resetPlayerAttack()
+    // {
+
+    // }
     public void grandmaDown(InputAction.CallbackContext ctx)
     {
         if (ctx.started)

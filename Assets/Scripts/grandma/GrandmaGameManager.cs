@@ -160,9 +160,9 @@ private IEnumerator CarGenerator()
                         road
                     );
 
-                    Destroy(car, 50f);
+                    // Destroy(car, 50f);
                 }
-                else{Debug.Log("dddddd");}
+                
             }
         }
 
