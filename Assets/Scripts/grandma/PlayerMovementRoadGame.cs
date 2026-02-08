@@ -38,7 +38,7 @@ public class PlayerMovementRoadGame : MonoBehaviour
     bool SafeWay;
     Coroutine idleRumbleCoroutine;
     Coroutine shortRumbleCoroutine;
-    // bool damage=false;
+    bool damage=false;
     private void Awake()
     {
         StopAllCoroutines();
@@ -76,7 +76,7 @@ public class PlayerMovementRoadGame : MonoBehaviour
   
     private void FixedUpdate()
     {
-        if (!canMove) return;
+        if (!canMove||damage) return;
         float dt = Time.fixedDeltaTime;
 
         Vector3 targetVel = new Vector3(moveInput.x, 0f, moveInput.y) * (((SafeWay) ? speedOnSafeWay : 1) * maxSpeed);
@@ -122,7 +122,7 @@ public class PlayerMovementRoadGame : MonoBehaviour
     }
     void takeGrandma()
     {
-        if (grandmaEnemy == null) return;
+        if (grandmaEnemy == null||damage) return;
         if (grandmaEnemy.parent != null)
         {
             if(!grandmaEnemy.parent.GetComponent<PlayerMovementRoadGame>().canTheft)
@@ -199,6 +199,10 @@ public class PlayerMovementRoadGame : MonoBehaviour
         {
             grandmaEnemy = other.transform;
         }
+        else if (other.CompareTag("Player"))
+        {
+            enemy=other.gameObject;
+        }
     }
     bool safeWayScore;
     private void OnTriggerExit(Collider other)
@@ -232,18 +236,39 @@ public class PlayerMovementRoadGame : MonoBehaviour
                 }
             }
         }
+        else if (other.CompareTag("Player"))
+        {
+            enemy=null;
+        }
     }
-    // public void takeAttack(InputAction.CallbackContext ctx)
-    // {
-    //     if (ctx.started)
-    //     {
-
-    //     }
-    // }
-    // void resetPlayerAttack()
-    // {
-
-    // }
+    GameObject enemy;
+    [SerializeField]private float attackCooldown=2;
+    [SerializeField]private float damageTime=2;
+    public void takeAttack(InputAction.CallbackContext ctx)
+    {
+        if (ctx.started&&!damage&&!attackCl)
+        {
+            attackCl=true;
+            Invoke("resetAttackCooldown",attackCooldown);
+            if(enemy){
+                enemy.GetComponent<PlayerMovementRoadGame>().TakeDamage();
+            }
+        }
+    }
+    void resetAttackCooldown()
+    {
+attackCl=false;
+    }
+    bool attackCl;
+    void resetPlayerAttack()
+    {
+        damage=false;
+    }
+    public void TakeDamage()
+    {
+        damage=true;
+        Invoke("resetPlayerAttack",damageTime);
+    }
     public void grandmaDown(InputAction.CallbackContext ctx)
     {
         if (ctx.started)

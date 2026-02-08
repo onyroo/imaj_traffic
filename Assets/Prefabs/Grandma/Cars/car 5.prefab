@@ -1099,9 +1099,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   limitMoveSpeed: {x: 9, y: 14}
+  stopSpeed: 0
+  slowSpeed: 3
   tr1: {fileID: 6193355659015848731}
   tr2: {fileID: 3741484344122158243}
   wheelRadius: 0.35
+  brakeSmooth: 8
+  accelSmooth: 2
+  reducedAccelSmooth: 0.2
+  accelRecoverThreshold: 3
 --- !u!54 &813579777007298289
 Rigidbody:
   m_ObjectHideFlags: 0

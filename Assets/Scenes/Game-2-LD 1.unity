@@ -989,6 +989,7 @@ GameObject:
   - component: {fileID: 330288602}
   - component: {fileID: 330288601}
   - component: {fileID: 330288600}
+  - component: {fileID: 330288604}
   m_Layer: 0
   m_Name: Safe Way
   m_TagString: SafeWay
@@ -1006,7 +1007,7 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 192
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1096,6 +1097,27 @@ Transform:
   - {fileID: 1870084781}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &330288604
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330288599}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 192
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 4.41, y: 1.28, z: 10}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &409930004
 GameObject:
   m_ObjectHideFlags: 0
@@ -1253,7 +1275,7 @@ MonoBehaviour:
   timeText: {fileID: 1285721926}
   cam: {fileID: 1547738348}
   playerDiedScore: 0
-  grandmaDiedScore: 15
+  grandmaDiedScore: 5
   timePlay: 90
   player1: {fileID: 0}
   player2: {fileID: 0}
