@@ -47,12 +47,13 @@ public class CrossRoadGameManager : MonoBehaviour
     }
     private void Start() {
          firstCars();
-        Invoke("firstCars",0.5f);
-        Invoke("firstCars",1);
+         StartCoroutine(waitForApawnCar());
+        Invoke("firstCars",0.3f);
+        Invoke("firstCars",0.6f);
+        Invoke("firstCars",0.9f);
+        Invoke("firstCars",1.2f);
         Invoke("firstCars",1.5f);
-        Invoke("firstCars",2f);
-        Invoke("firstCars",2.5f);
-        Invoke("firstCars",3f);
+        Invoke("firstCars",1.8f);
     }
     void firstCars()
     {
@@ -141,8 +142,47 @@ public class CrossRoadGameManager : MonoBehaviour
         return index;
     }
     #endregion
-
+    float PlayerCarWhenSpawn1=0,PlayerCarWhenSpawn2=0;
+    int carWaitForSpawn1=0,carWaitForSpawn2=0;
+    IEnumerator waitForApawnCar()
+    {
+       int playerIdTurn=0;
+       while(true)
+       {
+        if(carWaitForSpawn1>0)
+        {
+        if(PlayerCarWhenSpawn1+0.3f<Time.time)
+        {
+        carWaitForSpawn1--;
+        InstanceCar(0);
+        PlayerCarWhenSpawn1=Time.time;
+        }
+        }
+        if(carWaitForSpawn2>0)
+        {
+        if(PlayerCarWhenSpawn2+0.3f<Time.time)
+        {
+        carWaitForSpawn2--;
+        InstanceCar(1);
+        PlayerCarWhenSpawn2=Time.time;
+        }
+        }
+  
+        yield return null;
+       }
+    }
     public void CarGenerate(int playerIdTurn)
+    {
+        if(playerIdTurn==0)
+        {
+            carWaitForSpawn1++;
+        }
+        else 
+        {
+            carWaitForSpawn2++;
+        }
+    }   
+    void InstanceCar(int playerIdTurn)
     {
         GameObject g = Instantiate(carObj[Random.Range(0,carObj.Count)],playerIdTurn==0?playerSplines1[0].gameObject.transform.position:playerSplines2[0].gameObject.transform.position
         ,Quaternion.identity);
@@ -160,13 +200,10 @@ public class CrossRoadGameManager : MonoBehaviour
             playerCars2.Add(g);
             c.TakeMove(playerSplines2[0]);
         }
-        
     }
-
     public void OnClicked(int playerId, int dir)
     {
         if (finish||turnPlayer!=playerId) return;
-         Debug.Log("hell");
          CrossRoadCar activeCar;
         if(playerId==0)
         {
@@ -200,7 +237,6 @@ public class CrossRoadGameManager : MonoBehaviour
         }
         bluePlayerTxt.text = bluePlayerScore.ToString();
         redPlayerTxt.text = redPlayerScore.ToString();
-        Debug.Log("what");
         if(dir==0)return;
         if(playerId==0)
         {

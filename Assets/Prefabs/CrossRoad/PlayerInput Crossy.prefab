@@ -136,19 +136,7 @@ MonoBehaviour:
     m_ActionId: 43541f46-c501-464c-984d-ceb4cc57d588
     m_ActionName: 'Crossy/left[/XInputControllerWindows/dpad/left,/XInputControllerWindows3/dpad/left]'
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2677777497069218650}
-        m_TargetAssemblyTypeName: PlayerInputObject, Assembly-CSharp
-        m_MethodName: OnDown
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: e8f1e036-7889-4bc9-b1f3-4cf0c9299004
     m_ActionName: 'Crossy/down[/XInputControllerWindows/dpad/down,/XInputControllerWindows1/dpad/down]'
   - m_PersistentCalls:
@@ -167,6 +155,26 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 3c02a54b-da3b-4675-9819-f6530c6733e6
     m_ActionName: 'parcking/car player[/XInputControllerWindows/dpad,/XInputControllerWindows1/dpad,/XInputControllerWindows/leftStick,/XInputControllerWindows1/leftStick]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 685508b3-250d-4055-834c-4a8f19497030
+    m_ActionName: 'Grandma/attack[/XInputControllerWindows/buttonNorth]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2677777497069218650}
+        m_TargetAssemblyTypeName: PlayerInputObject, Assembly-CSharp
+        m_MethodName: OnMove
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 2c844dc5-096d-4def-a9b2-4c9093ab22d9
+    m_ActionName: 'Crossy/move[/XInputControllerWindows/dpad,/XInputControllerWindows/leftStick]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Crossy

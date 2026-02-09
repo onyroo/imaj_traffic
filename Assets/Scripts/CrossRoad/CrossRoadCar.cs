@@ -18,8 +18,8 @@ public class CrossRoadCar : MonoBehaviour
     {
         carId = idNum;
         dir=carId;
-        Renderer r = GetComponent<Renderer>();
-        r.material.color = (carId == 0) ? Color.red : Color.blue;
+        // Renderer r = GetComponent<Renderer>();
+        // r.material.color = (carId == 0) ? Color.red : Color.blue;
 
         direction=0;
         readyToMove = false;
@@ -101,7 +101,6 @@ public class CrossRoadCar : MonoBehaviour
     {
         while(anim.NormalizedTime!=1)
         {
-            Debug.Log(anim.NormalizedTime);
             yield return null;
         }
         TakeMove(newContainer);
