@@ -12,6 +12,8 @@ public class CrossRoadGameManager : MonoBehaviour
     [SerializeField] private Text redPlayerTxt;
     [SerializeField] private GameObject bluePlayerSprite;
     [SerializeField] private GameObject redPlayerSprite;
+    [SerializeField] private Text timerTXT;
+    [SerializeField] private Transform bitImage;
 
     [Header("Score")]
     [SerializeField] private int bluePlayerScore;
@@ -47,7 +49,7 @@ public class CrossRoadGameManager : MonoBehaviour
     }
     private void Start() {
          firstCars();
-         StartCoroutine(waitForApawnCar());
+        carSpawnerCR= StartCoroutine(waitForApawnCar());
         Invoke("firstCars",0.3f);
         Invoke("firstCars",0.6f);
         Invoke("firstCars",0.9f);
@@ -121,11 +123,21 @@ public class CrossRoadGameManager : MonoBehaviour
             playerTurns1.RemoveAt(index);
         else
             playerTurns2.RemoveAt(index);
-
-        yield return new WaitForSeconds(timeTurn);
+        float t=0;
+        // yield return new WaitForSeconds(timeTurn);
+        while(t<timeTurn)
+        {
+            t+=Time.deltaTime;
+            timer+=Time.deltaTime;
+            timerTXT.text=timer.ToString("F1");
+            // float dis=1-Mathf.Abs((timer - 0.5f) % 1f - 0.5f);
+            bitImage.localScale =new Vector3((timer - 0.5f) % 1f, (timer - 0.5f) % 1f, (timer - 0.5f) % 1f);
+            yield return null;
+        }
 
         StartCoroutine(TurnMatch(playerIdTurn == 0 ? 1 : 0));
     }
+    float timer=0;
     int IndexOfSmallest(List<float> list)
     {
         int index = 0;
@@ -144,33 +156,32 @@ public class CrossRoadGameManager : MonoBehaviour
     #endregion
     float PlayerCarWhenSpawn1=0,PlayerCarWhenSpawn2=0;
     int carWaitForSpawn1=0,carWaitForSpawn2=0;
+    Coroutine carSpawnerCR;
     IEnumerator waitForApawnCar()
     {
-       int playerIdTurn=0;
-       while(true)
-       {
-        if(carWaitForSpawn1>0)
+        while(carWaitForSpawn1 > 0 || carWaitForSpawn2 > 0)
         {
-        if(PlayerCarWhenSpawn1+0.3f<Time.time)
-        {
-        carWaitForSpawn1--;
-        InstanceCar(0);
-        PlayerCarWhenSpawn1=Time.time;
+            if(carWaitForSpawn1 > 0 && PlayerCarWhenSpawn1 + 0.3f < Time.time)
+            {
+                carWaitForSpawn1--;
+                InstanceCar(0);
+                PlayerCarWhenSpawn1 = Time.time;
+            }
+
+            if(carWaitForSpawn2 > 0 && PlayerCarWhenSpawn2 + 0.3f < Time.time)
+            {
+                carWaitForSpawn2--;
+                InstanceCar(1);
+                PlayerCarWhenSpawn2 = Time.time;
+            }
+
+            yield return null;
         }
-        }
-        if(carWaitForSpawn2>0)
-        {
-        if(PlayerCarWhenSpawn2+0.3f<Time.time)
-        {
-        carWaitForSpawn2--;
-        InstanceCar(1);
-        PlayerCarWhenSpawn2=Time.time;
-        }
-        }
-  
-        yield return null;
-       }
+
+        // Coroutine فقط وقتی تمام شد متوقف شود
+        carSpawnerCR = null;
     }
+
     public void CarGenerate(int playerIdTurn)
     {
         if(playerIdTurn==0)
@@ -180,6 +191,10 @@ public class CrossRoadGameManager : MonoBehaviour
         else 
         {
             carWaitForSpawn2++;
+        }
+        if(carSpawnerCR==null)
+        {
+            carSpawnerCR= StartCoroutine(waitForApawnCar());
         }
     }   
     void InstanceCar(int playerIdTurn)
@@ -201,9 +216,11 @@ public class CrossRoadGameManager : MonoBehaviour
             c.TakeMove(playerSplines2[0]);
         }
     }
+    int setGridTime=-2;
     public void OnClicked(int playerId, int dir)
     {
-        if (finish||turnPlayer!=playerId) return;
+        if (finish||turnPlayer!=playerId||setGridTime==(int)timer) return;
+        
          CrossRoadCar activeCar;
         if(playerId==0)
         {
@@ -227,14 +244,37 @@ public class CrossRoadGameManager : MonoBehaviour
         
         if (dir == activeCar.direction)
         {
-            if (playerId == 0) redPlayerScore++;
-            else bluePlayerScore++;
+            float t = 10*((timer - 0.5f) % 1f);   
+
+            if (playerId == 0)
+            {
+                if (t < 1.5f || t > 8.5f)
+                    redPlayerScore += 1;
+                else if ((t >= 1.5f && t <= 3f) || (t >= 7f && t <= 8.5f))
+                    redPlayerScore += 2;
+                else // یعنی 3 < t < 7
+                    redPlayerScore += 3;
+            }
+            else
+            {
+                if (t < 1.5f || t > 8.5f)
+                    bluePlayerScore += 1;
+                else if ((t >= 1.5f && t <= 3f) || (t >= 7f && t <= 8.5f))
+                    bluePlayerScore += 2;
+                else
+                    bluePlayerScore += 3;
+            }
+
         }
         else
         {
             if (playerId == 0) redPlayerScore--;
             else bluePlayerScore--;
         }
+        setGridTime=(int)timer;
+        Debug.Log((timer-0.5f)%1);
+        Debug.Log(setGridTime);
+        //  (timer-0.5f)%1
         bluePlayerTxt.text = bluePlayerScore.ToString();
         redPlayerTxt.text = redPlayerScore.ToString();
         if(dir==0)return;
