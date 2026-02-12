@@ -221,7 +221,7 @@ GameObject:
   - component: {fileID: 63690000}
   m_Layer: 0
   m_Name: Cube (4)
-  m_TagString: Untagged
+  m_TagString: Finish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -238,7 +238,8 @@ Transform:
   m_LocalPosition: {x: -4.46, y: 2.1, z: 0}
   m_LocalScale: {x: 11.3, y: 7.61, z: 0.1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 467677591}
   m_Father: {fileID: 586218839}
   m_LocalEulerAnglesHint: {x: 0, y: -71, z: 0}
 --- !u!65 &63690000
@@ -526,6 +527,18 @@ PrefabInstance:
     - target: {fileID: 6055725746533832659, guid: f4b39250cb09e194ab8f9b8f86ead28e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -13
+      objectReference: {fileID: 0}
+    - target: {fileID: 7371277424464207232, guid: f4b39250cb09e194ab8f9b8f86ead28e, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7371277424464207232, guid: f4b39250cb09e194ab8f9b8f86ead28e, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7371277424464207232, guid: f4b39250cb09e194ab8f9b8f86ead28e, type: 3}
+      propertyPath: m_ProvidesContacts
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8165315691795904111, guid: f4b39250cb09e194ab8f9b8f86ead28e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1118,6 +1131,37 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 4.41, y: 1.28, z: 10}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &405206114
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 405206115}
+  m_Layer: 0
+  m_Name: dis die
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &405206115
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 405206114}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.038, y: 0, z: -26.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 950905181}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &409930004
 GameObject:
   m_ObjectHideFlags: 0
@@ -1277,6 +1321,8 @@ MonoBehaviour:
   timePlay: 90
   player1: {fileID: 0}
   player2: {fileID: 0}
+  diePoint1: {fileID: 405206115}
+  diePoint2: {fileID: 467677591}
   limitPosCamera: 8
   camMoveSpeed: 1
   limitSizeCamera: 6
@@ -1295,6 +1341,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &467677590
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 467677591}
+  m_Layer: 0
+  m_Name: dis die
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &467677591
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 467677590}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.0147, y: 0, z: 28.21}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 63689999}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &476921025
 GameObject:
@@ -2092,7 +2169,7 @@ GameObject:
   - component: {fileID: 950905182}
   m_Layer: 0
   m_Name: Cube (3)
-  m_TagString: Untagged
+  m_TagString: Finish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2109,7 +2186,8 @@ Transform:
   m_LocalPosition: {x: 4.1, y: 2.1, z: 0}
   m_LocalScale: {x: 11.3, y: 7.61, z: 0.1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 405206115}
   m_Father: {fileID: 586218839}
   m_LocalEulerAnglesHint: {x: 0, y: -71, z: 0}
 --- !u!65 &950905182

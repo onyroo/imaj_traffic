@@ -47,6 +47,7 @@ public class GrandmaGameManager : MonoBehaviour
     private int redPlayerScore;
 
     public Transform player1, player2;
+    public Transform diePoint1,diePoint2;
     [SerializeField] private float limitPosCamera;
     [SerializeField] private float camMoveSpeed;
     [SerializeField] private float limitSizeCamera;

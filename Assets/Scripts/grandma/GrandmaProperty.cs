@@ -64,7 +64,7 @@ public class GrandmaProperty : MonoBehaviour
             if(other.name!=side.ToString())
             {
                  
-                 setPlayerParent();
+                //  setPlayerParent();
                 //  GrandmaGameManager.Instance.ResetGrandmaPosition(transform,side);
             }
         }
@@ -75,11 +75,21 @@ public class GrandmaProperty : MonoBehaviour
                 transform.parent.gameObject.GetComponent<PlayerMovementRoadGame>().grandmaTakeDown();
             }
             GrandmaGameManager.Instance.ResetGrandmaPosition(transform,lastSide,side);
-            setPlayerParent();
+            // setPlayerParent();
+        }
+        else if(other.CompareTag("Finish"))
+        {
+            Destroy(gameObject,2);
         }
         
     } 
-
+    public void goToDie()
+    {
+        if(lastSide==0)
+            sideCenter= GrandmaGameManager.Instance.diePoint1;
+        else 
+            sideCenter= GrandmaGameManager.Instance.diePoint2;
+    }
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Respawn"))

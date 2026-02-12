@@ -193,7 +193,9 @@ public class PlayerMovementRoadGame : MonoBehaviour
             {
             // Debug.Log(grandma.GetComponent<GrandmaProperty>().side.ToString());
             grandma.GetComponent<GrandmaProperty>().lastSide=playerId;
+            grandma.GetComponent<GrandmaProperty>().setPlayerParent();
             GrandmaGameManager.Instance.AddScore(playerId,10+((safeWayScore)?5:0));
+            grandma.GetComponent<GrandmaProperty>().goToDie();
             }
  
             }
@@ -296,7 +298,6 @@ attackCl=false;
             grandma.SetParent(null);
             maxSpeed = maxSpeedNormal;
             grandma.GetComponent<GrandmaProperty>().canMove = true;
-            grandma.GetComponent<GrandmaProperty>().setPlayerParent();
             grandma=null;
             cl.enabled=false;
  
@@ -313,7 +314,6 @@ attackCl=false;
 
         maxSpeed = maxSpeedNormal;
         grandma.GetComponent<GrandmaProperty>().canMove = true;
-        grandma.GetComponent<GrandmaProperty>().setPlayerParent();
         
 
         grandmaAnim.SetInteger("walk",1);
@@ -353,7 +353,7 @@ attackCl=false;
         if (pad == null) return;
         idleRumbleCoroutine = StartCoroutine(IdleRumble(pad));
     }
-
+ 
     private void StopIdleRumble()
     {
         if (idleRumbleCoroutine != null)
