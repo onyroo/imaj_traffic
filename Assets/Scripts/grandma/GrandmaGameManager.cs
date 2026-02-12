@@ -311,6 +311,17 @@ private IEnumerator CarGenerator()
 
     public void AddScore(int side, int amount = 1)
     {
+        if(amount>0)
+        {
+           if (side == 0)
+            {
+                SpawnGrandma(sideSpawnPointB, 1);
+            } 
+            else
+            {
+                SpawnGrandma(sideSpawnPointA,0);
+            }
+        }
         if (side == 0)
         {
             redPlayerScore += amount;

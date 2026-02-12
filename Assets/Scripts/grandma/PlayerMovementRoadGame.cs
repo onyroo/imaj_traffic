@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
 using System.Collections.Generic;
-
+using UnityEngine.InputSystem.Users;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMovementRoadGame : MonoBehaviour
 {
@@ -27,7 +27,7 @@ public class PlayerMovementRoadGame : MonoBehaviour
 
     private Rigidbody rb;
 
-    private int playerId;
+    [SerializeField] private int playerId;
     private Vector2 moveInput;
     private Vector3 velocity;
 
@@ -46,12 +46,16 @@ public class PlayerMovementRoadGame : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.interpolation = RigidbodyInterpolation.Interpolate;
         rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
-        playerId = playerInput.playerIndex;
-        Debug.Log($"Player ID: {playerId}");
+        // playerId = playerInput.playerIndex;
+        // Debug.Log($"Player ID: {playerId}");
     }
-
-    private void Start()
+    private void OnEnable() 
     {
+        PlayerInputProperties p = PlayerJoinManager.Instance.playerInputSet(playerId);
+
+        p.OnMoveInput += OnMove;          
+        p.OnWestPressed += grandmaDown;   
+        p.OnNorthPressed += takeAttack;  
         if (playerId == 0)
         {
             rb.position = GrandmaGameManager.Instance.player1ResetPoint.position;
@@ -61,16 +65,23 @@ public class PlayerMovementRoadGame : MonoBehaviour
         {
             rb.position = GrandmaGameManager.Instance.player2ResetPoint.position;
             GrandmaGameManager.Instance.player2 = body;
-        }
-         
+        }  
+
         r.material.mainTexture =(playerId==0)?t1:t2;
-        // anim=GetComponent<Animator>();
         StartIdleRumbleIfAllowed();
     }
+    private void OnDisable() {
+        PlayerInputProperties p = PlayerJoinManager.Instance.playerInputSet(playerId);
 
-    public void OnMove(InputAction.CallbackContext ctx)
+        p.OnMoveInput -= OnMove;          
+        p.OnWestPressed -= takeGrandma;   
+        p.OnNorthPressed -= takeAttack;  
+    }
+ 
+
+    public void OnMove(Vector2 s)
     {
-        moveInput = ctx.ReadValue<Vector2>();
+        moveInput = s;
     }
 
   
@@ -244,9 +255,9 @@ public class PlayerMovementRoadGame : MonoBehaviour
     GameObject enemy;
     [SerializeField]private float attackCooldown=2;
     [SerializeField]private float damageTime=2;
-    public void takeAttack(InputAction.CallbackContext ctx)
+    public void takeAttack()
     {
-        if (ctx.started&&!damage&&!attackCl)
+        if (!damage&&!attackCl)
         {
             attackCl=true;
             Invoke("resetAttackCooldown",attackCooldown);
@@ -269,10 +280,9 @@ attackCl=false;
         damage=true;
         Invoke("resetPlayerAttack",damageTime);
     }
-    public void grandmaDown(InputAction.CallbackContext ctx)
+    public void grandmaDown()
     {
-        if (ctx.started)
-        {
+         
             if (!hasGrandma)
             {
                 takeGrandma();
@@ -289,8 +299,7 @@ attackCl=false;
             grandma.GetComponent<GrandmaProperty>().setPlayerParent();
             grandma=null;
             cl.enabled=false;
-
-        }
+ 
     }
 
     public void grandmaTakeDown()
@@ -315,7 +324,7 @@ attackCl=false;
     // ---------- RUMBLE / CONTROLLER HELPERS ----------
 
     private Gamepad GetPlayerGamepad()
-{
+    {
     if (playerInput != null)
     {
         foreach (var dev in playerInput.devices)
@@ -340,7 +349,7 @@ attackCl=false;
     {
         if (SafeWay || countCall > 0||!canMove) return;
         if (idleRumbleCoroutine != null) return;
-        var pad = GetPlayerGamepad();
+        var pad = PlayerJoinManager.Instance.GetGamepad(playerId);
         if (pad == null) return;
         idleRumbleCoroutine = StartCoroutine(IdleRumble(pad));
     }
@@ -352,14 +361,14 @@ attackCl=false;
             StopCoroutine(idleRumbleCoroutine);
             idleRumbleCoroutine = null;
         }
-        var pad = GetPlayerGamepad();
+        var pad = PlayerJoinManager.Instance.GetGamepad(playerId);
         if (pad != null) pad.SetMotorSpeeds(0f, 0f);
     }
 
     public void StartShortRumble(float duration = 0.3f, float low = 0.8f, float high = 0.8f)
     {
         StopIdleRumble();
-        var pad = GetPlayerGamepad();
+        var pad = PlayerJoinManager.Instance.GetGamepad(playerId);
         if (pad == null) return;
         if (shortRumbleCoroutine != null)
         {
