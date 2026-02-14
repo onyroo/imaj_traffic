@@ -4889,6 +4889,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerJoinManager
   maxPlayers: 5
   bg: {fileID: 998147175}
+  players: 
 --- !u!114 &2129941187
 MonoBehaviour:
   m_ObjectHideFlags: 0
