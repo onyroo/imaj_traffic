@@ -13,7 +13,7 @@ public class CrossRoadGameManager : MonoBehaviour
     [SerializeField] private GameObject bluePlayerSprite;
     [SerializeField] private GameObject redPlayerSprite;
     [SerializeField] private Text timerTXT;
-    [SerializeField] private Transform bitImage;
+    [SerializeField] private RectTransform bitImage;
 
     [Header("Score")]
     [SerializeField] private int bluePlayerScore;
@@ -87,9 +87,11 @@ public class CrossRoadGameManager : MonoBehaviour
         }
     // Invoke("startMatch",3);
     }
-    
+    float spriteScoreWidth;
     void startMatch()
     {
+        spriteScoreWidth = ((RectTransform)bitImage.transform.parent).rect.width;
+        // Debug.Log(spriteScoreWidth);
         StartCoroutine(TurnMatch(0));
         
     }
@@ -131,7 +133,13 @@ public class CrossRoadGameManager : MonoBehaviour
             timer+=Time.deltaTime;
             timerTXT.text=timer.ToString("F1");
             // float dis=1-Mathf.Abs((timer - 0.5f) % 1f - 0.5f);
-            bitImage.localScale =new Vector3((timer - 0.5f) % 1f, (timer - 0.5f) % 1f, (timer - 0.5f) % 1f);
+            // Debug.Log((timer - 0.5f) % 1f - 0.5f);
+            // bitImage.localScale =new Vector3(dis,dis,dis);
+            // spriteScoreWidth
+            float dis = (Mathf.PingPong((timer- 0.5f), 1f) - 0.5f) * spriteScoreWidth;
+
+            bitImage.localPosition = new Vector3(dis, bitImage.localPosition.y, 0);
+
             yield return null;
         }
 
@@ -161,14 +169,14 @@ public class CrossRoadGameManager : MonoBehaviour
     {
         while(carWaitForSpawn1 > 0 || carWaitForSpawn2 > 0)
         {
-            if(carWaitForSpawn1 > 0 && PlayerCarWhenSpawn1 + 0.3f < Time.time)
+            if(carWaitForSpawn1 > 0 && PlayerCarWhenSpawn1 + 0.5f < Time.time)
             {
                 carWaitForSpawn1--;
                 InstanceCar(0);
                 PlayerCarWhenSpawn1 = Time.time;
             }
 
-            if(carWaitForSpawn2 > 0 && PlayerCarWhenSpawn2 + 0.3f < Time.time)
+            if(carWaitForSpawn2 > 0 && PlayerCarWhenSpawn2 + 0.5f < Time.time)
             {
                 carWaitForSpawn2--;
                 InstanceCar(1);
@@ -219,7 +227,7 @@ public class CrossRoadGameManager : MonoBehaviour
     int setGridTime=-2;
     public void OnClicked(int playerId, int dir)
     {
-        if (finish||turnPlayer!=playerId||setGridTime==(int)timer) return;
+        if (finish||turnPlayer!=playerId) return;
         
          CrossRoadCar activeCar;
         if(playerId==0)
@@ -242,7 +250,7 @@ public class CrossRoadGameManager : MonoBehaviour
             dir=3;
         }
         
-        if (dir == activeCar.direction)
+        if (dir == activeCar.direction&&setGridTime!=(int)timer)
         {
             float t = 10*((timer - 0.5f) % 1f);   
 
@@ -272,8 +280,8 @@ public class CrossRoadGameManager : MonoBehaviour
             else bluePlayerScore--;
         }
         setGridTime=(int)timer;
-        Debug.Log((timer-0.5f)%1);
-        Debug.Log(setGridTime);
+        // Debug.Log((timer-0.5f)%1);
+        // Debug.Log(setGridTime);
         //  (timer-0.5f)%1
         bluePlayerTxt.text = bluePlayerScore.ToString();
         redPlayerTxt.text = redPlayerScore.ToString();
