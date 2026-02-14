@@ -16,7 +16,7 @@ public class PlayerJoinManager : MonoBehaviour
 
     public List<int> players = new();
     private List<PlayerInputProperties> gamepads = new();
-    private List<Gamepad> pads = new(); // لیست Gamepad ها
+    private List<Gamepad> pads = new(); 
 
     void Awake()
     {
@@ -90,8 +90,7 @@ public class PlayerJoinManager : MonoBehaviour
             Destroy(player.gameObject);
             return;
         }
-
-        // duplicate نگیریم
+ 
         if (gamepads.Contains(player.GetComponent<PlayerInputProperties>()) || pads.Contains(pad))
         {
             Destroy(player.gameObject);
@@ -103,8 +102,8 @@ public class PlayerJoinManager : MonoBehaviour
         pads.Add(pad);
 
         int index = gamepads.Count - 1;
-        if(gamepads.Count>1)
-            MenuManager.Instance.playersJoined();
+        if(gamepads.Count>=1)
+            MenuManager.Instance.playersJoined(gamepads.Count);
 
         Debug.Log($"Player {index} Joined with {pad.displayName}");
 

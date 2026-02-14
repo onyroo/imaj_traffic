@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using RTLTMPro;
 using UnityEngine.InputSystem;
 using System.Collections;
 
@@ -7,10 +8,14 @@ public class MenuManager : MonoBehaviour
 {
     public static MenuManager Instance { get; private set; }
     [SerializeField] private GameObject JoinPanel;
+    [SerializeField] private GameObject playerCheckMark;
+
+    [SerializeField] private GameObject PLayPanel;
     [SerializeField] private GameObject sidePanel;
     [SerializeField] private GameObject UserNamePanel;
     [SerializeField] private Slider slider1, slider2;
-    [SerializeField] private Text nameText;
+    [SerializeField] private RTLTextMeshPro nameText;
+    [SerializeField] private GameObject textHelper;
     private string playerName1,playerName2; 
     private void Awake()
     {
@@ -19,11 +24,8 @@ public class MenuManager : MonoBehaviour
 
     private void Start()
     {
-        if (PlayerJoinManager.Instance.playerCount() > 1)
-        {
-            JoinPanel.SetActive(false);
-        }
-
+     
+        playersJoined(PlayerJoinManager.Instance.playerCount());
         slider1.value = 1;
         slider2.value = 0;
     }
@@ -56,9 +58,17 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-    public void playersJoined()
+    public void playersJoined(int a)
     {
+        if(a==1)
+        {
+            playerCheckMark.SetActive(true);
+        }
+        else if(a>1)
+        {
         JoinPanel.SetActive(false);
+        PLayPanel.SetActive(true);
+        }
     }
     int nextPanelText;
     public void SetName(string s)
@@ -66,13 +76,17 @@ public class MenuManager : MonoBehaviour
         if(nextPanelText==0)
         {
             playerName1+=s;
-            // Debug.Log(playerName1);
+            Debug.Log(playerName1);
             nameText.text=playerName1;
+            nameText.isRightToLeftText = true;
+             textHelper.SetActive(false);
         }
         else
         {
             playerName2+=s;
             nameText.text=playerName2;
+            nameText.isRightToLeftText = true;
+            textHelper.SetActive(false);
         }
     }
     public void RemoveName()
@@ -84,6 +98,15 @@ public class MenuManager : MonoBehaviour
                 playerName1 = playerName1.Substring(0, playerName1.Length - 1);
  
                 nameText.text = playerName1;
+                textHelper.SetActive(false);
+                if (playerName1.Length == 0)
+                {
+                    textHelper.SetActive(true);
+                }
+            }
+            else
+            {
+                textHelper.SetActive(true);
             }
         }
         else
@@ -92,6 +115,15 @@ public class MenuManager : MonoBehaviour
             {
                 playerName2 = playerName2.Substring(0, playerName2.Length - 1);
                 nameText.text = playerName2;
+                textHelper.SetActive(false);
+                if (playerName2.Length == 0)
+                {
+                    textHelper.SetActive(true);
+                }
+            }
+            else
+            {
+                textHelper.SetActive(true);
             }
         }
     }
@@ -113,6 +145,7 @@ public class MenuManager : MonoBehaviour
         {
             nextPanelText++;
             nameText.text="";
+            textHelper.SetActive(true);
         }
         else if(playerName2!=null)
         {
