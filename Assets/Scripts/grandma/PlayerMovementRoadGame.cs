@@ -35,7 +35,7 @@ public class PlayerMovementRoadGame : MonoBehaviour
     private bool hasGrandma;
     float maxSpeed = 0;
 
-    bool SafeWay;
+    public bool SafeWay;
     Coroutine idleRumbleCoroutine;
     Coroutine shortRumbleCoroutine;
     bool damage=false;
@@ -192,12 +192,17 @@ public class PlayerMovementRoadGame : MonoBehaviour
             other.name!=grandma.GetComponent<GrandmaProperty>().lastSide.ToString())
             {
             // Debug.Log(grandma.GetComponent<GrandmaProperty>().side.ToString());
-            grandma.GetComponent<GrandmaProperty>().lastSide=playerId;
-            grandma.GetComponent<GrandmaProperty>().setPlayerParent();
             GrandmaGameManager.Instance.AddScore(playerId,10+((safeWayScore)?5:0));
             grandma.GetComponent<GrandmaProperty>().goToDie();
             }
  
+            }
+
+            if(hasGrandma)
+            {
+            grandma.GetComponent<GrandmaProperty>().lastSide=int.Parse(other.name);
+            grandma.GetComponent<GrandmaProperty>().setPlayerParent();
+                
             }
             safeWayScore=true;
             
@@ -207,6 +212,7 @@ public class PlayerMovementRoadGame : MonoBehaviour
             countCall++;
             SafeWay = true;
             StopIdleRumble(); // safe way -> no idle rumble
+             
         }
         else if (!hasGrandma && other.CompareTag("grandma"))
         {

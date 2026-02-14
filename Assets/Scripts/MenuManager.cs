@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using RTLTMPro;
 using UnityEngine.InputSystem;
 using System.Collections;
-
+// using UnityEngine.EventSystems;
 public class MenuManager : MonoBehaviour
 {
     public static MenuManager Instance { get; private set; }
@@ -16,10 +16,12 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private Slider slider1, slider2;
     [SerializeField] private RTLTextMeshPro nameText;
     [SerializeField] private GameObject textHelper;
+    // [SerializeField] private Button playButton;
     private string playerName1,playerName2; 
     private void Awake()
     {
         Instance = this;
+        // playButton.Press;
     }
 
     private void Start()
@@ -50,7 +52,7 @@ public class MenuManager : MonoBehaviour
             if (pad.dpad.right.wasPressedThisFrame || pad.dpad.left.wasPressedThisFrame)
             {
                 int playerId = PlayerJoinManager.Instance.GetIndexGamepad(pad);
-                if (playerId != -1)
+                if (playerId != -1&&sidePanel.activeSelf)
                 {
                     StartCoroutine(ChangeSlider(playerId, pad.dpad.right.wasPressedThisFrame ? 1 : -1));
                 }
@@ -67,8 +69,13 @@ public class MenuManager : MonoBehaviour
         else if(a>1)
         {
         JoinPanel.SetActive(false);
-        PLayPanel.SetActive(true);
+        Invoke("turnOnPlayPanel",0.5f);
+        // EventSystem.current.SetSelectedGameObject(playButton);
         }
+    }
+    void turnOnPlayPanel()
+    {
+        PLayPanel.SetActive(true);
     }
     int nextPanelText;
     public void SetName(string s)

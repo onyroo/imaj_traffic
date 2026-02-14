@@ -26,14 +26,14 @@ public class CarMove : MonoBehaviour
     int humansAhead;
     int safeWayCount;
 
-    bool lowAccelMode;           
+    // bool lowAccelMode;           
     bool lowAccelDueToCar;        
 
     void OnEnable()
     {
         targetSpeed = Random.Range(limitMoveSpeed.x, limitMoveSpeed.y);
         moveSpeed = targetSpeed;
-        lowAccelMode = false;
+        // lowAccelMode = false;
         lowAccelDueToCar = false;
     }
 
@@ -43,7 +43,7 @@ public class CarMove : MonoBehaviour
 
         if (carsAhead > 0)
         {
-            lowAccelMode = true;
+            // lowAccelMode = true;
             lowAccelDueToCar = true;
         }
 
@@ -99,7 +99,16 @@ public class CarMove : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("car")) carsAhead++;
-        if (other.CompareTag("Player") || other.CompareTag("grandma")) humansAhead++;
+        if (other.CompareTag("Player"))
+        {
+        if(other.GetComponent<PlayerMovementRoadGame>().SafeWay)
+            humansAhead++;    
+        } 
+        if (other.CompareTag("grandma"))
+        {
+        if(other.GetComponent<GrandmaProperty>().SafeWay)
+            humansAhead++;    
+        } 
         if (other.CompareTag("SafeWay")) safeWayCount++;
         if (other.CompareTag("destroy")) Destroy(gameObject);
     }
@@ -107,7 +116,7 @@ public class CarMove : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("car")) carsAhead = Mathf.Max(0, carsAhead - 1);
-        if (other.CompareTag("Player") || other.CompareTag("grandma")) humansAhead = Mathf.Max(0, humansAhead - 1);
-        if (other.CompareTag("SafeWay")) safeWayCount = Mathf.Max(0, safeWayCount - 1);
+        else if (other.CompareTag("Player") || other.CompareTag("grandma")) humansAhead = Mathf.Max(0, humansAhead - 1);
+        else if (other.CompareTag("SafeWay")) safeWayCount = Mathf.Max(0, safeWayCount - 1);
     }
 }

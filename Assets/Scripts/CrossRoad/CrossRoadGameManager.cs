@@ -10,8 +10,8 @@ public class CrossRoadGameManager : MonoBehaviour
     [Header("UI")]
     [SerializeField] private Text bluePlayerTxt;
     [SerializeField] private Text redPlayerTxt;
-    [SerializeField] private GameObject bluePlayerSprite;
-    [SerializeField] private GameObject redPlayerSprite;
+    // [SerializeField] private GameObject bluePlayerSprite;
+    // [SerializeField] private GameObject redPlayerSprite;
     [SerializeField] private Text timerTXT;
     // [SerializeField] private RectTransform bitImage;
 
@@ -26,7 +26,9 @@ public class CrossRoadGameManager : MonoBehaviour
 
     [Header("Car")]
     [SerializeField] private List<GameObject> carObj=new ();
- 
+
+    [SerializeField] private Sprite[] TraficLightSprites;
+    [SerializeField] private Image playerLight1,playerLight2;
 
     private List<float> playerTurns1 = new List<float>();
     private List<float> playerTurns2 = new List<float>();
@@ -99,13 +101,13 @@ public class CrossRoadGameManager : MonoBehaviour
     {
         if(playerIdTurn==0)
         {
-            redPlayerSprite.SetActive(true);
-            bluePlayerSprite.SetActive(false); 
+            playerLight1.sprite=TraficLightSprites[0];
+            playerLight2.sprite=TraficLightSprites[2];
         }
         else
         {
-            redPlayerSprite.SetActive(false);
-            bluePlayerSprite.SetActive(true); 
+            playerLight1.sprite=TraficLightSprites[2];
+            playerLight2.sprite = TraficLightSprites[0];
         }
  
         turnPlayer = playerIdTurn;
@@ -139,7 +141,14 @@ public class CrossRoadGameManager : MonoBehaviour
             // float dis = (Mathf.PingPong((timer- 0.5f), 1f) - 0.5f) * spriteScoreWidth;
 
             // bitImage.localPosition = new Vector3(dis, bitImage.localPosition.y, 0);
-
+            if(t>timeTurn-1.5f)
+            {
+                if(playerIdTurn==0)
+                    playerLight1.sprite=TraficLightSprites[1];
+                else 
+                    playerLight2.sprite=TraficLightSprites[1];
+                
+            }
             yield return null;
         }
 

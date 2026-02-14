@@ -18,7 +18,7 @@ public class GrandmaProperty : MonoBehaviour
     [SerializeField] GameObject dis1,dis2;
     Vector3 moveDir;
     bool forceReturnToCenter;
-
+    public bool SafeWay;
     Transform sideCenter;
 
     private void Awake()
@@ -61,10 +61,14 @@ public class GrandmaProperty : MonoBehaviour
         {
             // if(transform.parent!=null)
             //     lastSide=(other.name=="0")?0:1;
+            if(transform.parent==null)
+            {
+                lastSide=int.Parse(other.name);
+            setPlayerParent();
+            }
             if(other.name!=side.ToString())
             {
                  
-                //  setPlayerParent();
                 //  GrandmaGameManager.Instance.ResetGrandmaPosition(transform,side);
             }
         }
@@ -81,8 +85,13 @@ public class GrandmaProperty : MonoBehaviour
         {
             Destroy(gameObject,2);
         }
+        else if(other.CompareTag("SafeWay"))
+        {
+            SafeWay=true;
+        }
         
     } 
+ 
     public void goToDie()
     {
         if(lastSide==0)
@@ -94,6 +103,9 @@ public class GrandmaProperty : MonoBehaviour
     {
         if (other.CompareTag("Respawn"))
             forceReturnToCenter = true;
+        else if(other.CompareTag("SafeWay"))
+             SafeWay=false;
+       
     }
 
     private void FixedUpdate()
