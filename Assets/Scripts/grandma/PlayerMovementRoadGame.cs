@@ -7,8 +7,8 @@ using UnityEngine.InputSystem.Users;
 public class PlayerMovementRoadGame : MonoBehaviour
 {
     public bool canMove = true;
-    [Header("Input")]
-    [SerializeField] private PlayerInput playerInput;
+    // [Header("Input")]
+    // [SerializeField] private PlayerInput playerInput;
     [SerializeField] private Collider cl;
     [Header("Movement")]
     [SerializeField] private float acceleration = 20f;
@@ -323,26 +323,26 @@ attackCl=false;
 
     // ---------- RUMBLE / CONTROLLER HELPERS ----------
 
-    private Gamepad GetPlayerGamepad()
-    {
-    if (playerInput != null)
-    {
-        foreach (var dev in playerInput.devices)
-        {
-            if (dev is Gamepad gp)
-                return gp;
-        }
-    }
+    // private Gamepad GetPlayerGamepad()
+    // {
+    // if (playerInput != null)
+    // {
+    //     foreach (var dev in playerInput.devices)
+    //     {
+    //         if (dev is Gamepad gp)
+    //             return gp;
+    //     }
+    // }
 
-    // fallback: pick first available gamepad
-    if (Gamepad.all.Count > 0)
-    {
-        int idx = Mathf.Clamp(playerId, 0, Gamepad.all.Count - 1);
-        return Gamepad.all[idx];
-    }
+    // // fallback: pick first available gamepad
+    // if (Gamepad.all.Count > 0)
+    // {
+    //     int idx = Mathf.Clamp(playerId, 0, Gamepad.all.Count - 1);
+    //     return Gamepad.all[idx];
+    // }
 
-    return Gamepad.current;
-}
+    // return Gamepad.current;
+    // }
 
     // start gentle idle rumble if player is not in safe/side and not currently short-rumbling
     private void StartIdleRumbleIfAllowed()
