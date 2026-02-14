@@ -493,7 +493,7 @@ TextureImporter:
         height: 232
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 85, y: 75, z: 81, w: 79}
       customData: 
       outline: []
       physicsShape: []
@@ -734,7 +734,7 @@ TextureImporter:
         width: 833
         height: 258
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 127, y: 136, z: 130, w: 117}
       customData: 
       outline: []
@@ -756,7 +756,7 @@ TextureImporter:
         width: 827
         height: 261
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 121, y: 138, z: 126, w: 117}
       customData: 
       outline: []
@@ -765,6 +765,28 @@ TextureImporter:
       bones: []
       spriteID: 5e6e861ce55f6e34481fbd65568cc259
       internalID: -1861286418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Button_White
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 300
+        width: 826
+        height: 264
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 114, y: 138, z: 126, w: 121}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b710e73949773c547be5c4db146eb08d
+      internalID: -1361898631
       vertices: []
       indices: 
       edges: []
@@ -803,6 +825,7 @@ TextureImporter:
       UI_Button_Red: -1093815796
       UI_Button_Round_Green: 297091142
       UI_Button_Round_Red: -349730900
+      UI_Button_White: -1361898631
       UI_Foreground_1: 1945440595
       UI_Foreground_2: 2141460300
       UI_Foreground_Directional: 1668830651
