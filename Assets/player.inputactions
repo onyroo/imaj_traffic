@@ -35,84 +35,35 @@
             "id": "ff3359d2-919e-46f9-8f3c-3bd79dcbf804",
             "actions": [
                 {
-                    "name": "right",
-                    "type": "Button",
-                    "id": "cb061329-0e6f-4a45-93b9-61d175c21887",
-                    "expectedControlType": "",
+                    "name": "move",
+                    "type": "Value",
+                    "id": "2c844dc5-096d-4def-a9b2-4c9093ab22d9",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "up",
-                    "type": "Button",
-                    "id": "8dc7b3b1-30a7-46c0-8d18-c1bccc844c3c",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "left",
-                    "type": "Button",
-                    "id": "43541f46-c501-464c-984d-ceb4cc57d588",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "down",
-                    "type": "Button",
-                    "id": "e8f1e036-7889-4bc9-b1f3-4cf0c9299004",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
                 {
                     "name": "",
-                    "id": "eb88006d-e01f-41e0-9268-78007709b09f",
-                    "path": "<Gamepad>/dpad/right",
+                    "id": "43e1328b-61c5-470d-98b8-4f4e3d634db8",
+                    "path": "<Gamepad>/dpad",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "right",
+                    "action": "move",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "adfdb00c-5416-4d7e-ac8c-85fefc3d197d",
-                    "path": "<Gamepad>/dpad/up",
+                    "id": "efdcbb6b-4634-4d24-a4cc-9e7b0a53056e",
+                    "path": "<Gamepad>/leftStick",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "up",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "f48d928a-54c7-41d3-a528-cf5fa7b45ef1",
-                    "path": "<Gamepad>/dpad/left",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "left",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "9792fbed-c8f2-4032-8a26-d1a964468441",
-                    "path": "<Gamepad>/dpad/down",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "down",
+                    "action": "move",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -135,6 +86,15 @@
                     "name": "grandmaDown",
                     "type": "Button",
                     "id": "f10393ab-15b9-42a8-a93b-0a6a3f611418",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "attack",
+                    "type": "Button",
+                    "id": "685508b3-250d-4055-834c-4a8f19497030",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -186,6 +146,17 @@
                 },
                 {
                     "name": "",
+                    "id": "b331cf7d-3946-4ec7-850c-df44f1da7086",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "e143b731-14a8-4512-ab0c-51b71d3ff590",
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",
@@ -231,6 +202,85 @@
                     "processors": "",
                     "groups": "",
                     "action": "car player",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "AllGames",
+            "id": "61024d65-b63c-440b-a608-e5aed89ab2ee",
+            "actions": [
+                {
+                    "name": "OnMove",
+                    "type": "Value",
+                    "id": "8566b3d4-16d5-4035-a457-95c674ee08ed",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "OnWest",
+                    "type": "Button",
+                    "id": "f5901adf-f58c-4869-9d52-690e0e94cc63",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "OnNorth",
+                    "type": "Button",
+                    "id": "14cfa1da-957b-4826-a4e0-ded15a2a7ba6",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "4f9727d9-d06a-4b0f-9813-9bffd734c846",
+                    "path": "<Gamepad>/dpad",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OnMove",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "45633ecc-ddbd-4721-9925-76f5ddd3aefc",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OnMove",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2af69fcd-079f-4188-a1af-d1ed65a76cb5",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OnWest",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "27f3e64e-a901-4edd-88af-41cf4bce800e",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OnNorth",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

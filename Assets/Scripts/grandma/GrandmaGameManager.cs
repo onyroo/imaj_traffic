@@ -47,6 +47,7 @@ public class GrandmaGameManager : MonoBehaviour
     private int redPlayerScore;
 
     public Transform player1, player2;
+    public Transform diePoint1,diePoint2;
     [SerializeField] private float limitPosCamera;
     [SerializeField] private float camMoveSpeed;
     [SerializeField] private float limitSizeCamera;
@@ -160,9 +161,9 @@ private IEnumerator CarGenerator()
                         road
                     );
 
-                    Destroy(car, 50f);
+                    // Destroy(car, 50f);
                 }
-                else{Debug.Log("dddddd");}
+                
             }
         }
 
@@ -311,7 +312,18 @@ private IEnumerator CarGenerator()
 
     public void AddScore(int side, int amount = 1)
     {
-        if (side == 1)
+        if(amount>0)
+        {
+           if (side == 0)
+            {
+                SpawnGrandma(sideSpawnPointB, 1);
+            } 
+            else
+            {
+                SpawnGrandma(sideSpawnPointA,0);
+            }
+        }
+        if (side == 0)
         {
             redPlayerScore += amount;
             if(redPlayerScore<0)

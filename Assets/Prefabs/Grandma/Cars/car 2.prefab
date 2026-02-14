@@ -671,8 +671,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.04, y: 1.64, z: 0.8}
-  m_Center: {x: 4, y: 0, z: 0}
+  m_Size: {x: 1.84, y: 1.64, z: 1.25}
+  m_Center: {x: 3.37, y: 0, z: 0}
 --- !u!114 &2314441140988534870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -686,9 +686,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   limitMoveSpeed: {x: 9, y: 14}
+  stopSpeed: 0
+  slowSpeed: 3
   tr1: {fileID: 2326598489466342991}
   tr2: {fileID: 7382489974368689236}
   wheelRadius: 0.35
+  brakeSmooth: 8
+  accelSmooth: 2
+  reducedAccelSmooth: 0.2
+  accelRecoverThreshold: 3
 --- !u!54 &813579777007298289
 Rigidbody:
   m_ObjectHideFlags: 0

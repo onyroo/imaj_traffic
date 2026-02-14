@@ -10,10 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 5707683788579468447}
   - component: {fileID: 4018300353529047178}
-  - component: {fileID: 935495839337255704}
   - component: {fileID: 5400433291434952856}
   - component: {fileID: 7934067381367619516}
-  m_Layer: 0
+  - component: {fileID: 2985596680058361140}
+  - component: {fileID: 162883892338838993}
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -49,117 +50,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   canMove: 1
-  playerInput: {fileID: 935495839337255704}
+  playerInput: {fileID: 0}
+  cl: {fileID: 2985596680058361140}
   acceleration: 35
   deceleration: 30
   maxSpeedNormal: 6
   maxSpeedWithGrandma: 4
   speedOnSafeWay: 1.5
+  r: {fileID: 8732662757651300418}
+  t1: {fileID: 2800000, guid: fa527927897197a47bb12f2803485098, type: 3}
+  t2: {fileID: 2800000, guid: a93272bdb25c389419212e9873a4ef26, type: 3}
   rotationSpeed: 8
   anim: {fileID: 398589296455404816}
   body: {fileID: 290005014989340844}
---- !u!114 &935495839337255704
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2043803113007441559}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
-  m_Actions: {fileID: -944628639613478452, guid: e8c9872d4df5b044c94eedee7303b03f, type: 3}
-  m_NotificationBehavior: 2
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents:
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 87a2252d-bd81-439c-a489-4276c041b570
-    m_ActionName: 'Players/check[/XInputControllerWindows/buttonEast,/XInputControllerWindows2/buttonEast]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: cb061329-0e6f-4a45-93b9-61d175c21887
-    m_ActionName: 'Crossy/right[/XInputControllerWindows/dpad/right,/XInputControllerWindows2/dpad/right]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 8dc7b3b1-30a7-46c0-8d18-c1bccc844c3c
-    m_ActionName: 'Crossy/up[/XInputControllerWindows/dpad/up,/XInputControllerWindows2/dpad/up]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 43541f46-c501-464c-984d-ceb4cc57d588
-    m_ActionName: 'Crossy/left[/XInputControllerWindows/dpad/left,/XInputControllerWindows2/dpad/left]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4018300353529047178}
-        m_TargetAssemblyTypeName: PlayerMovementRoadGame, Assembly-CSharp
-        m_MethodName: OnMove
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: bd0141d3-fce0-433b-9450-f790681ef478
-    m_ActionName: 'Grandma/Player[/XInputControllerWindows/leftStick,/XInputControllerWindows2/leftStick,/XInputControllerWindows/dpad,/XInputControllerWindows2/dpad]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4018300353529047178}
-        m_TargetAssemblyTypeName: PlayerMovementRoadGame, Assembly-CSharp
-        m_MethodName: grandmaDown
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: f10393ab-15b9-42a8-a93b-0a6a3f611418
-    m_ActionName: 'Grandma/grandmaDown[/XInputControllerWindows/buttonWest,/XInputControllerWindows2/buttonWest]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 3c02a54b-da3b-4675-9819-f6530c6733e6
-    m_ActionName: 'parcking/car player[/XInputControllerWindows/dpad,/XInputControllerWindows2/dpad,/XInputControllerWindows/leftStick,/XInputControllerWindows2/leftStick]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4018300353529047178}
-        m_TargetAssemblyTypeName: PlayerMovementRoadGame, Assembly-CSharp
-        m_MethodName: OnRotate
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: b044cf1f-6f87-4b71-b2e6-66262760873a
-    m_ActionName: 'Grandma/rotation[/XInputControllerWindows/rightStick]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: e8f1e036-7889-4bc9-b1f3-4cf0c9299004
-    m_ActionName: 'Crossy/down[/XInputControllerWindows1/dpad/down]'
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Grandma
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
+  playerId: 0
+  grandmaTheftCoolown: 3.5
+  canTheft: 1
+  attackCooldown: 2
+  damageTime: 2
 --- !u!54 &5400433291434952856
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -200,13 +108,59 @@ CapsuleCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
+    m_Bits: 72
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.7
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.21, z: 0}
+--- !u!136 &2985596680058361140
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2043803113007441559}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 72
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 0.34
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 1.1, y: 0.21, z: 0}
+--- !u!136 &162883892338838993
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2043803113007441559}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.35
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0.21, z: 0}
@@ -311,7 +265,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -9221626334735268210, guid: 0923e56ec4e26034abd76cc5d313b319, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8891250637605908700, guid: 0923e56ec4e26034abd76cc5d313b319, type: 3}
       propertyPath: m_IsActive
@@ -323,15 +277,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0923e56ec4e26034abd76cc5d313b319, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0923e56ec4e26034abd76cc5d313b319, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.2
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0923e56ec4e26034abd76cc5d313b319, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0923e56ec4e26034abd76cc5d313b319, type: 3}
       propertyPath: m_LocalPosition.x
@@ -339,7 +293,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0923e56ec4e26034abd76cc5d313b319, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.614
+      value: -0.7
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0923e56ec4e26034abd76cc5d313b319, type: 3}
       propertyPath: m_LocalPosition.z
@@ -665,6 +619,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 987868926454965891, guid: 0923e56ec4e26034abd76cc5d313b319, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1846256759547140760, guid: 0923e56ec4e26034abd76cc5d313b319, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -0.83972055
@@ -693,6 +651,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 22.559399
       objectReference: {fileID: 0}
+    - target: {fileID: 2227627929112842103, guid: 0923e56ec4e26034abd76cc5d313b319, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: c88b8150d19efe549ad9a19aff7810e2, type: 2}
     - target: {fileID: 2304244481032835489, guid: 0923e56ec4e26034abd76cc5d313b319, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0.038757198
@@ -905,3 +867,8 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!137 &8732662757651300418 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2227627929112842103, guid: 0923e56ec4e26034abd76cc5d313b319, type: 3}
+  m_PrefabInstance: {fileID: 7483497476085010229}
+  m_PrefabAsset: {fileID: 0}

@@ -2,79 +2,112 @@ using UnityEngine;
 
 public class CarMove : MonoBehaviour
 {
-    [SerializeField] private Vector2 limitMoveSpeed;
+    [Header("Speed")]
+    [SerializeField] private Vector2 limitMoveSpeed = new Vector2(6f, 9f);
+    [SerializeField] private float stopSpeed = 0f;
+    [SerializeField] private float slowSpeed = 3f;
+
+    [Header("Wheels")]
     [SerializeField] private Transform tr1, tr2;
     [SerializeField] private float wheelRadius = 0.35f;
 
+    [Header("Smooth")]
+    [SerializeField] private float brakeSmooth = 8f;
+    [SerializeField] private float accelSmooth = 2f;
+    [SerializeField] private float reducedAccelSmooth = 0.6f;
+
+    [Header("Recovery")]
+    [SerializeField] private float accelRecoverThreshold = 3f;
+
     float moveSpeed;
     float targetSpeed;
-    int c,v;
+
+    int carsAhead;
+    int humansAhead;
+    int safeWayCount;
+
+    bool lowAccelMode;           
+    bool lowAccelDueToCar;        
 
     void OnEnable()
     {
-        moveSpeed = Random.Range(limitMoveSpeed.x, limitMoveSpeed.y);
-        targetSpeed = moveSpeed;
+        targetSpeed = Random.Range(limitMoveSpeed.x, limitMoveSpeed.y);
+        moveSpeed = targetSpeed;
+        lowAccelMode = false;
+        lowAccelDueToCar = false;
     }
 
     void Update()
     {
-        if(v>0&&c>0)
+        UpdateTargetSpeed();
+
+        if (carsAhead > 0)
         {
-        moveSpeed = Mathf.Lerp(moveSpeed, 0, Time.deltaTime * 15f);
-        }
-        else if(c>0||v>0)
-        {
-        moveSpeed = Mathf.Lerp(moveSpeed, 3, Time.deltaTime * 6f);
-        }
-        else 
-        {
-        moveSpeed = Mathf.Lerp(moveSpeed, targetSpeed, Time.deltaTime * 0.5f);
+            lowAccelMode = true;
+            lowAccelDueToCar = true;
         }
 
-        Vector3 deltaMove = moveSpeed * transform.right * Time.deltaTime;
+        if (carsAhead == 0 && moveSpeed >= accelRecoverThreshold)
+        {
+            lowAccelDueToCar = false;
+        }
+
+        float accel = lowAccelDueToCar ? reducedAccelSmooth : accelSmooth;
+        float smooth = moveSpeed > targetSpeed ? brakeSmooth : accel;
+
+        moveSpeed = Mathf.Lerp(moveSpeed, targetSpeed, Time.deltaTime * smooth);
+
+        Vector3 deltaMove = transform.right * moveSpeed * Time.deltaTime;
         transform.position += deltaMove;
 
         RotateWheels(deltaMove.magnitude);
     }
 
+    void UpdateTargetSpeed()
+    {
+        if (carsAhead > 0)
+        {
+            targetSpeed = stopSpeed;
+            return;
+        }
+
+        if (safeWayCount > 0 && humansAhead > 0)
+        {
+            targetSpeed = stopSpeed;
+            return;
+        }
+
+        if (safeWayCount > 0)
+        {
+            targetSpeed = slowSpeed;
+            return;
+        }
+
+        targetSpeed = Mathf.Clamp(targetSpeed, limitMoveSpeed.x, limitMoveSpeed.y);
+
+        if (targetSpeed < limitMoveSpeed.x)
+            targetSpeed = Random.Range(limitMoveSpeed.x, limitMoveSpeed.y);
+    }
+
     void RotateWheels(float distance)
     {
-        float rotationAngle = (distance / (2f * Mathf.PI * wheelRadius)) * 360f;
-
-        tr1.Rotate(rotationAngle, 0f, 0f, Space.Self);
-        tr2.Rotate(rotationAngle, 0f, 0f, Space.Self);
+        float angle = (distance / (2f * Mathf.PI * wheelRadius)) * 360f;
+        if (tr1) tr1.Rotate(angle, 0f, 0f, Space.Self);
+        if (tr2) tr2.Rotate(angle, 0f, 0f, Space.Self);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("car")||other.CompareTag("SafeWay"))
-        {
-            // targetSpeed = 3f;
-            c++;
-        }
-        if(other.CompareTag("car")||other.CompareTag("Player")
-        ||other.CompareTag("grandma"))
-        {
-            v++;
-        }
+        if (other.CompareTag("car")) carsAhead++;
+        if (other.CompareTag("Player") || other.CompareTag("grandma")) humansAhead++;
+        if (other.CompareTag("SafeWay")) safeWayCount++;
+        if (other.CompareTag("destroy")) Destroy(gameObject);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("car")||other.CompareTag("SafeWay"))
-        {
-            c--;
-            if (c <= 0)
-            {
-                c = 0;
-                targetSpeed = Random.Range(limitMoveSpeed.x, limitMoveSpeed.y);
-            }
-        }
-         
-        if(other.CompareTag("car")||other.CompareTag("Player")
-        ||other.CompareTag("grandma"))
-        {
-            v--;
-        }
+        if (other.CompareTag("car")) carsAhead = Mathf.Max(0, carsAhead - 1);
+        if (other.CompareTag("Player") || other.CompareTag("grandma")) humansAhead = Mathf.Max(0, humansAhead - 1);
+        if (other.CompareTag("SafeWay")) safeWayCount = Mathf.Max(0, safeWayCount - 1);
     }
 }

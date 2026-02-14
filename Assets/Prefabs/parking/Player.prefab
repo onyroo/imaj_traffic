@@ -155,15 +155,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 6232281233847838797}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48b2bba0ef3dbcb49a513a3660dde7b4, type: 3}
+  m_Script: {fileID: 11500000, guid: d60dc97fd7d1af1489b96ae219191279, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
   input: {fileID: 3236969444468040911}
-  moveSpeed: 10
-  rayDistance: 100
+  moveSpeed: 4
+  rayDistance: 10
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1
 --- !u!114 &3236969444468040911
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,6 +229,18 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 3c02a54b-da3b-4675-9819-f6530c6733e6
     m_ActionName: 'parcking/car player[/XInputControllerWindows/dpad,/XInputControllerWindows2/dpad,/XInputControllerWindows/leftStick,/XInputControllerWindows2/leftStick]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e8f1e036-7889-4bc9-b1f3-4cf0c9299004
+    m_ActionName: 'Crossy/down[/XInputControllerWindows/dpad/down,/XInputControllerWindows2/dpad/down]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 685508b3-250d-4055-834c-4a8f19497030
+    m_ActionName: 'Grandma/attack[/XInputControllerWindows/buttonNorth,/XInputControllerWindows2/buttonNorth]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b044cf1f-6f87-4b71-b2e6-66262760873a
+    m_ActionName: 'Grandma/rotation[/XInputControllerWindows/rightStick,/XInputControllerWindows2/rightStick]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: parcking

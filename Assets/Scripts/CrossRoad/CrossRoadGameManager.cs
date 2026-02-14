@@ -12,6 +12,10 @@ public class CrossRoadGameManager : MonoBehaviour
     [SerializeField] private Text redPlayerTxt;
     [SerializeField] private GameObject bluePlayerSprite;
     [SerializeField] private GameObject redPlayerSprite;
+    [SerializeField] private Text timerTXT;
+    [SerializeField] private Transform bitImage;
+
+[SerializeField] private AudioSource ad;
 
     [Header("Score")]
     [SerializeField] private int bluePlayerScore;
@@ -21,7 +25,7 @@ public class CrossRoadGameManager : MonoBehaviour
     [SerializeField] private float timePlay = 30f;
     [SerializeField] private Vector2Int betweenTurnTime = new Vector2Int(1, 3);
 
-
+    public List<float> carTimesSpawn=new();
     [Header("Car")]
     [SerializeField] private List<GameObject> carObj=new ();
  
@@ -45,15 +49,47 @@ public class CrossRoadGameManager : MonoBehaviour
         TurnGenerator();
         
     }
+
     private void Start() {
          firstCars();
-        Invoke("firstCars",0.5f);
-        Invoke("firstCars",1);
+        // carSpawnerCR= StartCoroutine(waitForApawnCar());
+        StartCoroutine(spawner());
+        Invoke("firstCars",0.3f);
+        Invoke("firstCars",0.6f);
+        Invoke("firstCars",0.9f);
+        Invoke("firstCars",1.2f);
         Invoke("firstCars",1.5f);
-        Invoke("firstCars",2f);
-        Invoke("firstCars",2.5f);
-        Invoke("firstCars",3f);
+        Invoke("firstCars",1.8f);
     }
+    IEnumerator spawner()
+    {
+        while(true)
+        {
+            timer+=Time.deltaTime;
+            if(carTimesSpawn.Count>0&&(((int)carTimesSpawn[0])+(carTimesSpawn[0]%0.1f)*0.33f)<timer+1.5f)
+            {
+                InstanceCar(0);
+                carTimesSpawn.RemoveAt(0);
+            }
+            timerTXT.text=timer.ToString("F1");
+            yield return null;
+        }
+    }
+    public void puase()
+    {
+        if(Time.timeScale==0)
+        {
+            ad.pitch=1;
+            Time.timeScale=1;        
+        }
+        else
+        {
+            ad.pitch=0;
+            Time.timeScale=0;
+        }
+
+    }
+
     void firstCars()
     {
         CarGenerate(0);
@@ -87,44 +123,54 @@ public class CrossRoadGameManager : MonoBehaviour
     
     void startMatch()
     {
-        StartCoroutine(TurnMatch(0));
-        
+        // StartCoroutine(TurnMatch(0));
+        turnPlayer=0;
     }
-    IEnumerator TurnMatch(int playerIdTurn)
-    {
-        if(playerIdTurn==0)
-        {
-            redPlayerSprite.SetActive(true);
-            bluePlayerSprite.SetActive(false); 
-        }
-        else
-        {
-            redPlayerSprite.SetActive(false);
-            bluePlayerSprite.SetActive(true); 
-        }
+    // IEnumerator TurnMatch(int playerIdTurn)
+    // {
+    //     if(playerIdTurn==0)
+    //     {
+    //         redPlayerSprite.SetActive(true);
+    //         bluePlayerSprite.SetActive(false); 
+    //     }
+    //     else
+    //     {
+    //         redPlayerSprite.SetActive(false);
+    //         bluePlayerSprite.SetActive(true); 
+    //     }
  
-        turnPlayer = playerIdTurn;
+    //     turnPlayer = playerIdTurn;
 
-        List<float> currentList = playerIdTurn == 0 ? playerTurns1 : playerTurns2;
+    //     List<float> currentList = playerIdTurn == 0 ? playerTurns1 : playerTurns2;
 
-        if (currentList.Count == 0)
-        {
-            finish = true;
-            Debug.Log("Game Finished");
-            yield break;
-        }
+    //     if (currentList.Count == 0)
+    //     {
+    //         finish = true;
+    //         Debug.Log("Game Finished");
+    //         yield break;
+    //     }
 
-        int index = Random.Range(0, currentList.Count);
-        float timeTurn = currentList[index];
-        if(playerIdTurn == 0)
-            playerTurns1.RemoveAt(index);
-        else
-            playerTurns2.RemoveAt(index);
+    //     int index = Random.Range(0, currentList.Count);
+    //     float timeTurn = currentList[index];
+    //     if(playerIdTurn == 0)
+    //         playerTurns1.RemoveAt(index);
+    //     else
+    //         playerTurns2.RemoveAt(index);
+    //     float t=0;
+    //     // yield return new WaitForSeconds(timeTurn);
+    //     while(t<timeTurn)
+    //     {
+    //         t+=Time.deltaTime;
+    //         timer+=Time.deltaTime;
+    //         timerTXT.text=timer.ToString("F1");
+    //         // float dis=1-Mathf.Abs((timer - 0.5f) % 1f - 0.5f);
+    //         bitImage.localScale =new Vector3((timer - 0.5f) % 1f, (timer - 0.5f) % 1f, (timer - 0.5f) % 1f);
+    //         yield return null;
+    //     }
 
-        yield return new WaitForSeconds(timeTurn);
-
-        StartCoroutine(TurnMatch(playerIdTurn == 0 ? 1 : 0));
-    }
+    //     StartCoroutine(TurnMatch(playerIdTurn == 0 ? 1 : 0));
+    // }
+    float timer=0;
     int IndexOfSmallest(List<float> list)
     {
         int index = 0;
@@ -141,8 +187,50 @@ public class CrossRoadGameManager : MonoBehaviour
         return index;
     }
     #endregion
+    float PlayerCarWhenSpawn1=0,PlayerCarWhenSpawn2=0;
+    int carWaitForSpawn1=0,carWaitForSpawn2=0;
+    Coroutine carSpawnerCR;
+    // IEnumerator waitForApawnCar()
+    // {
+        // while(carWaitForSpawn1 > 0 || carWaitForSpawn2 > 0)
+        // {
+        //     if(carWaitForSpawn1 > 0 && PlayerCarWhenSpawn1 + 0.3f < Time.time)
+        //     {
+        //         carWaitForSpawn1--;
+        //         InstanceCar(0);
+        //         PlayerCarWhenSpawn1 = Time.time;
+        //     }
+
+        //     if(carWaitForSpawn2 > 0 && PlayerCarWhenSpawn2 + 0.3f < Time.time)
+        //     {
+        //         carWaitForSpawn2--;
+        //         InstanceCar(1);
+        //         PlayerCarWhenSpawn2 = Time.time;
+        //     }
+
+        //     yield return null;
+        // }
+
+        // // Coroutine فقط وقتی تمام شد متوقف شود
+        // carSpawnerCR = null;
+    // }
 
     public void CarGenerate(int playerIdTurn)
+    {
+        if(playerIdTurn==0)
+        {
+            carWaitForSpawn1++;
+        }
+        else 
+        {
+            carWaitForSpawn2++;
+        }
+        if(carSpawnerCR==null)
+        {
+            // carSpawnerCR= StartCoroutine(waitForApawnCar());
+        }
+    }   
+    void InstanceCar(int playerIdTurn)
     {
         GameObject g = Instantiate(carObj[Random.Range(0,carObj.Count)],playerIdTurn==0?playerSplines1[0].gameObject.transform.position:playerSplines2[0].gameObject.transform.position
         ,Quaternion.identity);
@@ -160,13 +248,12 @@ public class CrossRoadGameManager : MonoBehaviour
             playerCars2.Add(g);
             c.TakeMove(playerSplines2[0]);
         }
-        
     }
-
+    int setGridTime=-2;
     public void OnClicked(int playerId, int dir)
     {
         if (finish||turnPlayer!=playerId) return;
-         Debug.Log("hell");
+        
          CrossRoadCar activeCar;
         if(playerId==0)
         {
@@ -190,17 +277,39 @@ public class CrossRoadGameManager : MonoBehaviour
         
         if (dir == activeCar.direction)
         {
-            if (playerId == 0) redPlayerScore++;
-            else bluePlayerScore++;
+            float t = 10*((timer - 0.5f) % 1f);   
+
+            if (playerId == 0)
+            {
+                if (t < 1.5f || t > 8.5f)
+                    redPlayerScore += 1;
+                else if ((t >= 1.5f && t <= 3f) || (t >= 7f && t <= 8.5f))
+                    redPlayerScore += 2;
+                else // یعنی 3 < t < 7
+                    redPlayerScore += 3;
+            }
+            else
+            {
+                if (t < 1.5f || t > 8.5f)
+                    bluePlayerScore += 1;
+                else if ((t >= 1.5f && t <= 3f) || (t >= 7f && t <= 8.5f))
+                    bluePlayerScore += 2;
+                else
+                    bluePlayerScore += 3;
+            }
+
         }
         else
         {
             if (playerId == 0) redPlayerScore--;
             else bluePlayerScore--;
         }
+        setGridTime=(int)timer;
+        Debug.Log((timer-0.5f)%1);
+        Debug.Log(setGridTime);
+        //  (timer-0.5f)%1
         bluePlayerTxt.text = bluePlayerScore.ToString();
         redPlayerTxt.text = redPlayerScore.ToString();
-        Debug.Log("what");
         if(dir==0)return;
         if(playerId==0)
         {

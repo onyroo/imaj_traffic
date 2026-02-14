@@ -11,10 +11,11 @@ public class GrandmaProperty : MonoBehaviour
 
     [SerializeField] float moveSpeed = 1.8f;
     [SerializeField] float turnSmooth = 4f;
-    [SerializeField] float rayDistance = 1.2f;
+    [SerializeField] float rayDistance = 1.5f;
     [SerializeField] float edgeAvoidStrength = 2.5f;
     [SerializeField] float reachCenterDistance = 0.6f;
     [SerializeField] private Animator anim;
+    [SerializeField] GameObject dis1,dis2;
     Vector3 moveDir;
     bool forceReturnToCenter;
 
@@ -40,9 +41,20 @@ public class GrandmaProperty : MonoBehaviour
  
     public void setPlayerParent()
     {
-        sideCenter = lastSide == 0
-            ? GrandmaGameManager.Instance.sideSpawnPointA
-            : GrandmaGameManager.Instance.sideSpawnPointB;
+ 
+        if(lastSide == 0)
+        {
+           sideCenter= GrandmaGameManager.Instance.sideSpawnPointA;
+           dis1.SetActive(false);
+           dis2.SetActive(true);
+        }
+        else
+        {
+           sideCenter= GrandmaGameManager.Instance.sideSpawnPointB;
+            dis1.SetActive(true);
+           dis2.SetActive(false);
+        }
+         
     }
      private void OnTriggerEnter(Collider other) {
         if(other.CompareTag("side"))
@@ -52,7 +64,7 @@ public class GrandmaProperty : MonoBehaviour
             if(other.name!=side.ToString())
             {
                  
-                 setPlayerParent();
+                //  setPlayerParent();
                 //  GrandmaGameManager.Instance.ResetGrandmaPosition(transform,side);
             }
         }
@@ -63,11 +75,21 @@ public class GrandmaProperty : MonoBehaviour
                 transform.parent.gameObject.GetComponent<PlayerMovementRoadGame>().grandmaTakeDown();
             }
             GrandmaGameManager.Instance.ResetGrandmaPosition(transform,lastSide,side);
-            setPlayerParent();
+            // setPlayerParent();
+        }
+        else if(other.CompareTag("Finish"))
+        {
+            Destroy(gameObject,2);
         }
         
     } 
-
+    public void goToDie()
+    {
+        if(lastSide==0)
+            sideCenter= GrandmaGameManager.Instance.diePoint1;
+        else 
+            sideCenter= GrandmaGameManager.Instance.diePoint2;
+    }
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Respawn"))
