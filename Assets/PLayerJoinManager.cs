@@ -4,6 +4,8 @@ using UnityEngine.InputSystem;
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem.UI;
+using UnityEngine.EventSystems;
 
 public class PlayerJoinManager : MonoBehaviour
 {
@@ -73,7 +75,29 @@ public class PlayerJoinManager : MonoBehaviour
         players.Add(player1);
         players.Add(player2);
     } 
-     
+       public void SetGamePadForUI(int playerID)
+    {
+        Gamepad targetPad = GetGamepad(playerID);
+        if (targetPad == null) return;
+    
+        InputSystemUIInputModule uiModule =
+            EventSystem.current.GetComponent<InputSystemUIInputModule>();
+    
+        if (uiModule == null) return;
+    
+        // همه device ها غیرفعال → فقط این گیم پد فعال
+        if (uiModule.actionsAsset != null)
+        {
+            uiModule.actionsAsset.devices = new InputDevice[]
+            {
+                targetPad
+            };
+        }
+    
+        Debug.Log($"Only Player {playerID} can control UI now");
+    }
+
+
     public void OnPlayerJoined(PlayerInput player)
     {
         if (players.Count >= maxPlayers)

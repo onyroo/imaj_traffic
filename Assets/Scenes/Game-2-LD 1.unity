@@ -1296,11 +1296,11 @@ MonoBehaviour:
   - prefab: {fileID: 8080308023583512600, guid: e6acde5e5a78a7f4ab9fa97c2ef74ac1, type: 3}
     chance: 20
   - prefab: {fileID: 8080308023583512600, guid: b4b6e6fb53fafeb4c9c232dc174fad63, type: 3}
-    chance: 4
+    chance: 2
   - prefab: {fileID: 8080308023583512600, guid: 7918dc3e2fe594649b5143cc00100f70, type: 3}
-    chance: 5
-  - prefab: {fileID: 8080308023583512600, guid: 1337ae779abfd404597698c45d2d0272, type: 3}
     chance: 3
+  - prefab: {fileID: 8080308023583512600, guid: 1337ae779abfd404597698c45d2d0272, type: 3}
+    chance: 1
   roads:
   - {fileID: 1242375283}
   - {fileID: 1057433270}

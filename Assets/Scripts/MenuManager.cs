@@ -7,8 +7,8 @@ using System.Collections;
 public class MenuManager : MonoBehaviour
 {
     public static MenuManager Instance { get; private set; }
-    [SerializeField] private GameObject JoinPanel;
-    [SerializeField] private GameObject playerCheckMark;
+    [SerializeField] private GameObject scoreBoardPanel;
+    [SerializeField] private GameObject playerSide1,playerSide2;
 
     [SerializeField] private GameObject PLayPanel;
     [SerializeField] private GameObject sidePanel;
@@ -18,9 +18,13 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject textHelper;
     // [SerializeField] private Button playButton;
     private string playerName1,playerName2; 
-    private void Awake()
+    CarGameDatabase database;
+
+    void Awake()
     {
+  
         Instance = this;
+        database = new CarGameDatabase();
         // playButton.Press;
     }
 
@@ -28,6 +32,7 @@ public class MenuManager : MonoBehaviour
     {
      
         playersJoined(PlayerJoinManager.Instance.playerCount());
+
         slider1.value = 1;
         slider2.value = 0;
     }
@@ -46,13 +51,27 @@ public class MenuManager : MonoBehaviour
             if (pad.buttonEast.wasPressedThisFrame)
             {
                 Debug.Log($"Button B pressed by Player {i} ({pad.displayName})");
+                if(scoreBoardPanel.activeSelf)
+                {
+                    scoreBoardPanel.SetActive(false);
+                    PLayPanel.SetActive(true);
+                }
             }
 
-            // چک حرکت slider
+           
             if (pad.dpad.right.wasPressedThisFrame || pad.dpad.left.wasPressedThisFrame)
             {
                 int playerId = PlayerJoinManager.Instance.GetIndexGamepad(pad);
-                if (playerId != -1&&sidePanel.activeSelf)
+                // if (playerId != -1&&sidePanel.activeSelf)
+                // {
+                //     StartCoroutine(ChangeSlider(playerId, pad.dpad.right.wasPressedThisFrame ? 1 : -1));
+                // }
+                // Debug.Log(playerId);
+                if(playerId==0&&playerSide1.activeSelf)
+                {
+                    StartCoroutine(ChangeSlider(playerId, pad.dpad.right.wasPressedThisFrame ? 1 : -1));
+                }
+                else if(playerId==1&&playerSide2.activeSelf)
                 {
                     StartCoroutine(ChangeSlider(playerId, pad.dpad.right.wasPressedThisFrame ? 1 : -1));
                 }
@@ -64,19 +83,18 @@ public class MenuManager : MonoBehaviour
     {
         if(a==1)
         {
-            playerCheckMark.SetActive(true);
+            playerSide1.SetActive(true);
         }
         else if(a>1)
         {
-        JoinPanel.SetActive(false);
-        Invoke("turnOnPlayPanel",0.5f);
+            playerSide2.SetActive(true);
         // EventSystem.current.SetSelectedGameObject(playButton);
         }
     }
-    void turnOnPlayPanel()
-    {
-        PLayPanel.SetActive(true);
-    }
+    // void turnOnPlayPanel()
+    // {
+    //     PLayPanel.SetActive(true);
+    // }
     int nextPanelText;
     public void SetName(string s)
     {
@@ -148,38 +166,57 @@ public class MenuManager : MonoBehaviour
     }
     public void nextPlayerOnSetName()
     {
-        if(nextPanelText==0&&playerName1!=null)
+        if(nextPanelText==0&&playerName1.Length>=3&&!database.HasPlayer(playerName1))
         {
+        PlayerJoinManager.Instance.SetGamePadForUI(2);
+
             nextPanelText++;
             nameText.text="";
+            database.SetPlayerInfo(playerName1,0);
             textHelper.SetActive(true);
         }
-        else if(playerName2!=null)
+        else if(playerName2.Length>=3&&!database.HasPlayer(playerName2))
         {
             UserNamePanel.SetActive(false);
             // choosePanel.SetActive(true);
+            database.SetPlayerInfo(playerName2,0);
             PlayerPrefs.SetString("player1",playerName1);
             PlayerPrefs.SetString("player2",playerName2);
+            PlayerPrefs.SetFloat("player1Score", 0f);
+            PlayerPrefs.SetFloat("player2Score", 0f);
             PlayerPrefs.Save();
+        PlayerJoinManager.Instance.SetGamePadForUI(1);
+
             PlayerJoinManager.Instance.ChangeScene(1);
         }
     }
-    // direction: 1 → right /  -1 → left
+
+    bool CanSetSide;
     public void setSides()
     {
-        if(slider1.value== slider2.value)
+        if((slider1.value== slider2.value)||(slider1.value<1&&slider1.value>0)&&(slider2.value<1&&slider2.value>0)
+        ||!playerSide2.activeSelf)
         {
          
             
         }
         else
         {
+
+            if (!CanSetSide)
+            {
+            CanSetSide=true;
+            return;
+                
+            }
             if(slider1.value==1)
                 PlayerJoinManager.Instance.setSides(0,1);
             else
                 PlayerJoinManager.Instance.setSides(1,0);
         sidePanel.SetActive(false);
-        UserNamePanel.SetActive(true);
+        PLayPanel.SetActive(true);
+
+        PlayerJoinManager.Instance.SetGamePadForUI(1);
         }
     }
     IEnumerator ChangeSlider(int playerId, int direction)

@@ -83,6 +83,7 @@ public class GrandmaProperty : MonoBehaviour
         }
         else if(other.CompareTag("Finish"))
         {
+            GrandmaGameManager.Instance.SpawnGrandma(lastSide);
             Destroy(gameObject,2);
         }
         else if(other.CompareTag("SafeWay"))

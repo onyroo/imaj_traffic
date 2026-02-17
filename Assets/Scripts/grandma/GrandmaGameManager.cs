@@ -227,18 +227,20 @@ private IEnumerator CarGenerator()
     {
         for (int i = 0; i < grandmaSpawnCount; i++)
         {
-            SpawnGrandma(sideSpawnPointA, 0);
-            SpawnGrandma(sideSpawnPointB, 1);
+            SpawnGrandma(0);
+            SpawnGrandma( 1);
         }
     }
 
-    private void SpawnGrandma(Transform point, int side)
+    public void SpawnGrandma(int side)
     {
-        GameObject g = Instantiate(grandmaPrefab, point.position, grandmaPrefab.transform.rotation);
+        Transform t=side==0?sideSpawnPointA:sideSpawnPointB;
+       
+        GameObject g = Instantiate(grandmaPrefab, t.position, grandmaPrefab.transform.rotation);
         GrandmaProperty gp = g.GetComponent<GrandmaProperty>();
         if (gp) gp.side = side;
     }
-
+ 
     List<Coroutine> cldown = new();
     bool onePlayerDead;
 
@@ -316,11 +318,11 @@ private IEnumerator CarGenerator()
         {
            if (side == 0)
             {
-                SpawnGrandma(sideSpawnPointB, 1);
+                SpawnGrandma(1);
             } 
             else
             {
-                SpawnGrandma(sideSpawnPointA,0);
+                SpawnGrandma(0);
             }
         }
         if (side == 0)
