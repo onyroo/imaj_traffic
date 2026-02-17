@@ -76,26 +76,26 @@ public class PlayerJoinManager : MonoBehaviour
         players.Add(player2);
     } 
        public void SetGamePadForUI(int playerID)
-    {
-        Gamepad targetPad = GetGamepad(playerID);
-        if (targetPad == null) return;
-    
-        InputSystemUIInputModule uiModule =
-            EventSystem.current.GetComponent<InputSystemUIInputModule>();
-    
-        if (uiModule == null) return;
-    
-        // همه device ها غیرفعال → فقط این گیم پد فعال
-        if (uiModule.actionsAsset != null)
         {
-            uiModule.actionsAsset.devices = new InputDevice[]
+            Gamepad targetPad = GetGamepad(playerID);
+            if (targetPad == null) return;
+        
+            InputSystemUIInputModule uiModule =
+                EventSystem.current.GetComponent<InputSystemUIInputModule>();
+        
+            if (uiModule == null) return;
+        
+            // همه device ها غیرفعال → فقط این گیم پد فعال
+            if (uiModule.actionsAsset != null)
             {
-                targetPad
-            };
+                uiModule.actionsAsset.devices = new InputDevice[]
+                {
+                    targetPad
+                };
+            }
+        
+            Debug.Log($"Only Player {playerID} can control UI now");
         }
-    
-        Debug.Log($"Only Player {playerID} can control UI now");
-    }
 
 
     public void OnPlayerJoined(PlayerInput player)

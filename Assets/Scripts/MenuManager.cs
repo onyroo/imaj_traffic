@@ -168,7 +168,7 @@ public class MenuManager : MonoBehaviour
     {
         if(nextPanelText==0&&playerName1.Length>=3&&!database.HasPlayer(playerName1))
         {
-        PlayerJoinManager.Instance.SetGamePadForUI(2);
+        PlayerJoinManager.Instance.SetGamePadForUI(1);
 
             nextPanelText++;
             nameText.text="";
@@ -185,7 +185,7 @@ public class MenuManager : MonoBehaviour
             PlayerPrefs.SetFloat("player1Score", 0f);
             PlayerPrefs.SetFloat("player2Score", 0f);
             PlayerPrefs.Save();
-        PlayerJoinManager.Instance.SetGamePadForUI(1);
+            PlayerJoinManager.Instance.SetGamePadForUI(0);
 
             PlayerJoinManager.Instance.ChangeScene(1);
         }
@@ -216,7 +216,7 @@ public class MenuManager : MonoBehaviour
         sidePanel.SetActive(false);
         PLayPanel.SetActive(true);
 
-        PlayerJoinManager.Instance.SetGamePadForUI(1);
+        PlayerJoinManager.Instance.SetGamePadForUI(0);
         }
     }
     IEnumerator ChangeSlider(int playerId, int direction)
