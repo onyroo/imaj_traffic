@@ -6,10 +6,11 @@ public class PlayerInputProperties : MonoBehaviour
 {
     [SerializeField] private PlayerInput playerInput;
 
-    // Events عمومی برای هر Action
     public event Action OnWestPressed;
     public event Action OnNorthPressed;
     public event Action<Vector2> OnMoveInput;
+    // public event Action OnRTHold;
+    public event Action<float> OnRTValueChanged;  
 
     private void OnEnable()
     {
@@ -17,26 +18,28 @@ public class PlayerInputProperties : MonoBehaviour
 
         // if (playerInput != null)
         // {
-           
-        //     playerInput.actions["West"].performed += OnWest;
-        //     playerInput.actions["North"].performed += OnNorth;
-        //     playerInput.actions["Move"].performed += OnMove;
-        //     playerInput.actions["Move"].canceled += OnMove; 
+            // playerInput.actions["West"].performed += OnWest;
+            // playerInput.actions["North"].performed += OnNorth;
+            // playerInput.actions["Move"].performed += OnMove;
+            // playerInput.actions["Move"].canceled += OnMove;
+            // playerInput.actions["RT"].performed += OnRT;
+            // playerInput.actions["RT"].canceled += OnRT;
         // }
     }
 
     // private void OnDisable()
     // {
-    //     if (playerInput != null)
-    //     {
-    //         playerInput.actions["West"].performed -= OnWest;
-    //         playerInput.actions["North"].performed -= OnNorth;
-    //         playerInput.actions["Move"].performed -= OnMove;
-    //         playerInput.actions["Move"].canceled -= OnMove;
-    //     }
+        // if (playerInput != null)
+        // {
+            // playerInput.actions["West"].performed -= OnWest;
+            // playerInput.actions["North"].performed -= OnNorth;
+            // playerInput.actions["Move"].performed -= OnMove;
+            // playerInput.actions["Move"].canceled -= OnMove;
+            // playerInput.actions["RT"].performed -= OnRT;
+            // playerInput.actions["RT"].canceled -= OnRT;
+        // }
     // }
 
-    // Callback برای PlayerInput → event عمومی فراخوانی می‌شود
     public void OnWest(InputAction.CallbackContext ctx)
     {
         if (ctx.started)
@@ -52,6 +55,16 @@ public class PlayerInputProperties : MonoBehaviour
             OnNorthPressed?.Invoke();
         }
     }
+
+
+    public void OnRT(InputAction.CallbackContext ctx)
+    {
+        // if(ctx.performed)
+            OnRTValueChanged?.Invoke(ctx.ReadValue<float>());
+
+        
+    }
+
 
     public void OnMove(InputAction.CallbackContext ctx)
     {

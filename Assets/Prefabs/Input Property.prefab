@@ -147,6 +147,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 14cfa1da-957b-4826-a4e0-ded15a2a7ba6
     m_ActionName: 'AllGames/OnNorth[/XInputControllerWindows/buttonNorth,/XInputControllerWindows1/buttonNorth]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5754105379076831762}
+        m_TargetAssemblyTypeName: PlayerInputProperties, Assembly-CSharp
+        m_MethodName: OnRT
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: b8341482-7179-4414-9079-ed6a5d72c2c4
+    m_ActionName: 'AllGames/OnRT[/XInputControllerWindows/rightTrigger,/XInputControllerWindows1/rightTrigger]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: AllGames
