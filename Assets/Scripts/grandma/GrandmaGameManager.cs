@@ -13,7 +13,7 @@ public class CarSpawnData
 public class GrandmaGameManager : MonoBehaviour
 {
     public static GrandmaGameManager Instance { get; private set; }
-
+    [SerializeField] private GameObject finishPanel;
     [Header("Spawn Settings")]
     [SerializeField] private int grandmaSpawnCount = 3;
     [SerializeField] private GameObject grandmaPrefab;
@@ -114,7 +114,9 @@ public class GrandmaGameManager : MonoBehaviour
         timer-=Time.deltaTime;
         yield return null;
         }
-
+        // GameObject g= Instance(finishPanel);
+        finishPanel.SetActive(true);
+        finishPanel.GetComponent<ShowScorePanel>().PopUp(redPlayerScore,bluePlayerScore);
         Debug.Log("finish");
         timeText.text="Thank u For Watching!!!!!!";
         // yield return new WaitForSeconds(timePlay);
@@ -173,27 +175,27 @@ private IEnumerator CarGenerator()
     }
 }
 
-    private void OnDrawGizmosSelected()
-{
-    if (roads == null) return;
+//     private void OnDrawGizmosSelected()
+// {
+//     if (roads == null) return;
 
-    Gizmos.color = Color.red;
+//     Gizmos.color = Color.red;
 
-    Vector3 boxHalfExtents = new Vector3(9f, 0.25f, 1f);
+//     Vector3 boxHalfExtents = new Vector3(9f, 0.25f, 1f);
 
-    foreach (var road in roads)
-    {
-        if (!road) continue;
+//     foreach (var road in roads)
+//     {
+//         if (!road) continue;
 
-        Gizmos.matrix = Matrix4x4.TRS(
-            road.position,
-            road.rotation,
-            Vector3.one
-        );
+//         Gizmos.matrix = Matrix4x4.TRS(
+//             road.position,
+//             road.rotation,
+//             Vector3.one
+//         );
 
-        Gizmos.DrawWireCube(Vector3.zero, boxHalfExtents * 2f);
-    }
-}
+//         Gizmos.DrawWireCube(Vector3.zero, boxHalfExtents * 2f);
+//     }
+// }
 
 
 

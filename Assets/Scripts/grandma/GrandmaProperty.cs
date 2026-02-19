@@ -60,25 +60,25 @@ public class GrandmaProperty : MonoBehaviour
         if(other.CompareTag("side"))
         {
             // if(transform.parent!=null)
-            //     lastSide=(other.name=="0")?0:1;
             if(transform.parent==null)
             {
                 lastSide=int.Parse(other.name);
-            setPlayerParent();
+                // lastSide=(other.name=="0")?0:1;
+                setPlayerParent();
             }
-            if(other.name!=side.ToString())
-            {
+            // if(other.name!=side.ToString())
+            // {
                  
                 //  GrandmaGameManager.Instance.ResetGrandmaPosition(transform,side);
-            }
+            // }
         }
         else if(other.CompareTag("car"))
         {
+            GrandmaGameManager.Instance.ResetGrandmaPosition(transform,lastSide,side);
             if(transform.parent!=null)
             {
                 transform.parent.gameObject.GetComponent<PlayerMovementRoadGame>().grandmaTakeDown();
             }
-            GrandmaGameManager.Instance.ResetGrandmaPosition(transform,lastSide,side);
             // setPlayerParent();
         }
         else if(other.CompareTag("Finish"))

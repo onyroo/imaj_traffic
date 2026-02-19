@@ -131,7 +131,7 @@ public class PlayerJoinManager : MonoBehaviour
             MenuManager.Instance.playersJoined(gamepads.Count);
 
         // if(gamepads.Count>1)
-        //     ChangeScene(4);
+        
         Debug.Log($"Player {index} Joined with {pad.displayName}");
 
         if (gamepads.Count >= maxPlayers)

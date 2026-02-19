@@ -433,7 +433,7 @@ GameObject:
   - component: {fileID: 7255876133833361932}
   - component: {fileID: 404200220012158976}
   - component: {fileID: 1681045133440737896}
-  m_Layer: 6
+  m_Layer: 2
   m_Name: 'Grandma '
   m_TagString: grandma
   m_Icon: {fileID: 0}
@@ -560,6 +560,7 @@ MonoBehaviour:
   anim: {fileID: 4191108858711332242}
   dis1: {fileID: 4074519734208446425}
   dis2: {fileID: 1297234434674131333}
+  SafeWay: 0
 --- !u!54 &1681045133440737896
 Rigidbody:
   m_ObjectHideFlags: 0

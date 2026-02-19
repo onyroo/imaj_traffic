@@ -197,18 +197,18 @@ public class PlayerMovementRoadGame : MonoBehaviour
             }
  
             }
-            else
-            {
-            if(hasGrandma)
-            {
+            // else
+            // {
+            // if(hasGrandma)
+            // {
             grandma.GetComponent<GrandmaProperty>().lastSide=int.Parse(other.name);
             grandma.GetComponent<GrandmaProperty>().setPlayerParent();    
 
-            if(other.name==grandma.GetComponent<GrandmaProperty>().lastSide.ToString())
-                grandma.GetComponent<GrandmaProperty>().goToDie();
+            // if(other.name==grandma.GetComponent<GrandmaProperty>().lastSide.ToString())
+            //     grandma.GetComponent<GrandmaProperty>().goToDie();
           
-            }   
-            }
+            // }   
+            // }
 
             safeWayScore=true;
             

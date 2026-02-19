@@ -9,6 +9,7 @@ public class MenuManager : MonoBehaviour
     public static MenuManager Instance { get; private set; }
     [SerializeField] private GameObject scoreBoardPanel;
     [SerializeField] private GameObject playerSide1,playerSide2;
+    [SerializeField] private GameObject playerIconName1,playerIconName2;
 
     [SerializeField] private GameObject PLayPanel;
     [SerializeField] private GameObject sidePanel;
@@ -59,23 +60,29 @@ public class MenuManager : MonoBehaviour
             }
 
            
-            if (pad.dpad.right.wasPressedThisFrame || pad.dpad.left.wasPressedThisFrame)
+            float stickX = pad.leftStick.x.ReadValue();
+
+ 
+            bool stickRight = stickX > 0.5f;
+            bool stickLeft = stickX < -0.5f;
+
+            if (pad.dpad.right.wasPressedThisFrame || pad.dpad.left.wasPressedThisFrame || stickRight || stickLeft)
             {
                 int playerId = PlayerJoinManager.Instance.GetIndexGamepad(pad);
-                // if (playerId != -1&&sidePanel.activeSelf)
-                // {
-                //     StartCoroutine(ChangeSlider(playerId, pad.dpad.right.wasPressedThisFrame ? 1 : -1));
-                // }
-                // Debug.Log(playerId);
-                if(playerId==0&&playerSide1.activeSelf)
+
+                int direction = (pad.dpad.right.wasPressedThisFrame || stickRight) ? 1 : -1;
+
+                if (playerId == 0 && playerSide1.activeSelf)
                 {
-                    StartCoroutine(ChangeSlider(playerId, pad.dpad.right.wasPressedThisFrame ? 1 : -1));
+                    StartCoroutine(ChangeSlider(playerId, direction));
                 }
-                else if(playerId==1&&playerSide2.activeSelf)
+                else if (playerId == 1 && playerSide2.activeSelf)
                 {
-                    StartCoroutine(ChangeSlider(playerId, pad.dpad.right.wasPressedThisFrame ? 1 : -1));
+                    StartCoroutine(ChangeSlider(playerId, direction));
                 }
             }
+
+
         }
     }
 
@@ -104,7 +111,7 @@ public class MenuManager : MonoBehaviour
             Debug.Log(playerName1);
             nameText.text=playerName1;
             nameText.isRightToLeftText = true;
-             textHelper.SetActive(false);
+            textHelper.SetActive(false);
         }
         else
         {
@@ -174,6 +181,8 @@ public class MenuManager : MonoBehaviour
             nameText.text="";
             database.SetPlayerInfo(playerName1,0);
             textHelper.SetActive(true);
+            playerIconName1.SetActive(false);
+            playerIconName2.SetActive(true);
         }
         else if(playerName2.Length>=3&&!database.HasPlayer(playerName2))
         {

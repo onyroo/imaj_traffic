@@ -23,7 +23,7 @@ public class CrossRoadGameManager : MonoBehaviour
     [SerializeField] private float timePlay = 30f;
     [SerializeField] private Vector2Int betweenTurnTime = new Vector2Int(1, 3);
 
-
+    [SerializeField] private GameObject redTurn,blueTurn;
     [Header("Car")]
     [SerializeField] private List<GameObject> carObj=new ();
 
@@ -51,7 +51,7 @@ public class CrossRoadGameManager : MonoBehaviour
     }
     private void Start() {
          firstCars();
-        carSpawnerCR= StartCoroutine(waitForApawnCar());
+        StartCoroutine(waitForApawnCar());
         Invoke("firstCars",0.3f);
         Invoke("firstCars",0.6f);
         Invoke("firstCars",0.9f);
@@ -95,17 +95,21 @@ public class CrossRoadGameManager : MonoBehaviour
         // spriteScoreWidth = ((RectTransform)bitImage.transform.parent).rect.width;
         // Debug.Log(spriteScoreWidth);
         StartCoroutine(TurnMatch(0));
-        
+        // StartCoroutine(waitForApawnCar());
     }
     IEnumerator TurnMatch(int playerIdTurn)
     {
         if(playerIdTurn==0)
         {
+            blueTurn.SetActive(false);
+            redTurn.SetActive(true);
             playerLight1.sprite=TraficLightSprites[0];
             playerLight2.sprite=TraficLightSprites[2];
         }
         else
         {
+            blueTurn.SetActive(true);
+            redTurn.SetActive(false);
             playerLight1.sprite=TraficLightSprites[2];
             playerLight2.sprite = TraficLightSprites[0];
         }
@@ -173,10 +177,10 @@ public class CrossRoadGameManager : MonoBehaviour
     #endregion
     float PlayerCarWhenSpawn1=0,PlayerCarWhenSpawn2=0;
     int carWaitForSpawn1=0,carWaitForSpawn2=0;
-    Coroutine carSpawnerCR;
+    // Coroutine carSpawnerCR;
     IEnumerator waitForApawnCar()
     {
-        while(carWaitForSpawn1 > 0 || carWaitForSpawn2 > 0)
+        while(true)
         {
             if(carWaitForSpawn1 > 0 && PlayerCarWhenSpawn1 + 0.5f < Time.time)
             {
@@ -196,7 +200,7 @@ public class CrossRoadGameManager : MonoBehaviour
         }
 
         // Coroutine فقط وقتی تمام شد متوقف شود
-        carSpawnerCR = null;
+        // carSpawnerCR = null;
     }
 
     public void CarGenerate(int playerIdTurn)
@@ -209,10 +213,10 @@ public class CrossRoadGameManager : MonoBehaviour
         {
             carWaitForSpawn2++;
         }
-        if(carSpawnerCR==null)
-        {
-            carSpawnerCR= StartCoroutine(waitForApawnCar());
-        }
+        // if(carSpawnerCR==null)
+        // {
+        //     carSpawnerCR= StartCoroutine(waitForApawnCar());
+        // }
     }   
     void InstanceCar(int playerIdTurn)
     {
