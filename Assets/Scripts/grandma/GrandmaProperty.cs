@@ -1,3 +1,4 @@
+
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -29,7 +30,7 @@ public class GrandmaProperty : MonoBehaviour
 
     private void Start()
     {
-        
+        forceReturnToCenter=true;
         anim.SetInteger("walk",1);
         lastSide=side;
         setPlayerParent();
@@ -38,10 +39,9 @@ public class GrandmaProperty : MonoBehaviour
     {
        return anim; 
     }
- 
+    bool goHome;
     public void setPlayerParent()
     {
- 
         if(lastSide == 0)
         {
            sideCenter= GrandmaGameManager.Instance.sideSpawnPointA;
@@ -53,6 +53,10 @@ public class GrandmaProperty : MonoBehaviour
            sideCenter= GrandmaGameManager.Instance.sideSpawnPointB;
             dis1.SetActive(true);
            dis2.SetActive(false);
+        }
+        if(goHome)
+        {
+            goToDie();
         }
          
     }
@@ -83,8 +87,8 @@ public class GrandmaProperty : MonoBehaviour
         }
         else if(other.CompareTag("Finish"))
         {
-            GrandmaGameManager.Instance.SpawnGrandma(lastSide);
-            Destroy(gameObject,2);
+            // GrandmaGameManager.Instance.SpawnGrandma(lastSide);
+            Destroy(gameObject,1);
         }
         else if(other.CompareTag("SafeWay"))
         {
@@ -95,6 +99,7 @@ public class GrandmaProperty : MonoBehaviour
  
     public void goToDie()
     {
+        goHome=true;
         if(lastSide==0)
             sideCenter= GrandmaGameManager.Instance.diePoint1;
         else 

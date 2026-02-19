@@ -28,6 +28,11 @@ public class GrandmaGameManager : MonoBehaviour
     [Header("Spawn Points")]
     public Transform sideSpawnPointA;
     public Transform sideSpawnPointB;
+
+    [SerializeField] private Transform sideSpawnGrandma1;
+    [SerializeField] private Transform sideSpawnGrandma2;
+
+    
     [SerializeField] private float cooldownSpawn = 3f;
 
     [Header("Player Reset Points")]
@@ -229,12 +234,12 @@ private IEnumerator CarGenerator()
     {
         for (int i = 0; i < grandmaSpawnCount; i++)
         {
-            SpawnGrandma(0);
-            SpawnGrandma( 1);
+            SpawnGrandmaFirst(0);
+            SpawnGrandmaFirst( 1);
         }
     }
 
-    public void SpawnGrandma(int side)
+    public void SpawnGrandmaFirst(int side)
     {
         Transform t=side==0?sideSpawnPointA:sideSpawnPointB;
        
@@ -242,7 +247,14 @@ private IEnumerator CarGenerator()
         GrandmaProperty gp = g.GetComponent<GrandmaProperty>();
         if (gp) gp.side = side;
     }
- 
+    public void SpawnGrandma(int side)
+    {
+        Transform t=side==0?sideSpawnGrandma1:sideSpawnGrandma2;
+       
+        GameObject g = Instantiate(grandmaPrefab, t.position, grandmaPrefab.transform.rotation);
+        GrandmaProperty gp = g.GetComponent<GrandmaProperty>();
+        if (gp) gp.side = side;
+    }
     List<Coroutine> cldown = new();
     bool onePlayerDead;
 

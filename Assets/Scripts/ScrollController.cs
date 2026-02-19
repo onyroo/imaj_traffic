@@ -33,14 +33,12 @@ public class ScrollController : MonoBehaviour
 
         float input = GetVerticalInput();
 
-        // اگر ورودی جدید زده شد (بار اول)
         if (input != 0 && lastInput == 0)
         {
             ApplyScroll(input);
             holdTimer = 0;
             repeatTimer = 0;
         }
-        // اگر نگه داشته
         else if (input != 0 && lastInput == input)
         {
             holdTimer += Time.deltaTime;
@@ -56,7 +54,6 @@ public class ScrollController : MonoBehaviour
                 }
             }
         }
-        // اگر رها شد
         else if (input == 0)
         {
             holdTimer = 0;
@@ -65,7 +62,6 @@ public class ScrollController : MonoBehaviour
 
         lastInput = input;
 
-        // حرکت نرم
         scrollbar.value = Mathf.Lerp(
             scrollbar.value,
             targetValue,
@@ -77,11 +73,9 @@ public class ScrollController : MonoBehaviour
     {
         var pad = Gamepad.current;
 
-        // Dpad
         if (pad.dpad.up.isPressed) return 1;
         if (pad.dpad.down.isPressed) return -1;
 
-        // Joystick
         float stickY = pad.leftStick.y.ReadValue();
 
         if (stickY > 0.5f) return 1;
