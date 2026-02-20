@@ -17,16 +17,17 @@ public class CitycarPlayerMovement : MonoBehaviour
     [SerializeField] private float acceleration = 20f;
     [SerializeField] private float decelartion = 25f;
     [SerializeField] private float rotationSpeed = 10f;
-
+    [SerializeField] private float cooldown=2f;
+    [SerializeField] private float speedSafe = 4;
     [Header("Car Control")]
     [SerializeField] private float sideFriction = 8f;
-
+     
     [Header("Post System")]
     [SerializeField] private GameObject tr;
     [SerializeField] private Transform[] points;
     [SerializeField] private GameObject[] callers;
 
-    bool havePost = false;
+    bool havePost = false,collisionCar;
     GameObject g;
 
     float gasInput = 0f;
@@ -76,7 +77,7 @@ public class CitycarPlayerMovement : MonoBehaviour
     {
         moveInput = s.normalized;
 
-        if (moveInput.sqrMagnitude > 0.01f)
+        if (moveInput.sqrMagnitude > 0.01f||collisionCar)
         {
             Vector3 moveDir = new Vector3(moveInput.x, 0, moveInput.y);
             Quaternion targetRot = Quaternion.LookRotation(moveDir);
@@ -95,7 +96,7 @@ public class CitycarPlayerMovement : MonoBehaviour
 
         rb.AddForce(-sideVelocity * sideFriction, ForceMode.Acceleration);
 
-        if (gasInput > 0.01f)
+        if (gasInput > 0.01f&&!collisionCar)
         {
             if (forwardSpeed < maxSpeed)
             {
@@ -135,8 +136,9 @@ public class CitycarPlayerMovement : MonoBehaviour
     {
         agent.nextPosition = transform.position;
         UpdatePathLine();
+        mag=rb.linearVelocity.magnitude;
     }
-
+float mag;
     IEnumerator SpawnerLoop()
     {
         while (true)
@@ -152,6 +154,7 @@ public class CitycarPlayerMovement : MonoBehaviour
                 callers[index].SetActive(true);
         }
     }
+    
 
     void UpdatePathLine()
     {
@@ -188,9 +191,14 @@ public class CitycarPlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+       
         if (other.CompareTag("SetDir") && !havePost)
+        {
             g = other.gameObject;
+            return;
+        }
 
+     
         if (other.CompareTag("Finish") && havePost)
         {
             havePost = false;
@@ -202,14 +210,36 @@ public class CitycarPlayerMovement : MonoBehaviour
                 line.enabled = false;
 
             Debug.Log("Delivered");
+            return;
         }
-    }
+        Debug.Log(mag);
+        if(mag < speedSafe||other.CompareTag("Finish"))return;
+       
+        collisionCar = true;
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("SetDir") && !havePost)
-            g = null;
+        // if (c != null)
+        //     StopCoroutine(c);
+        rb.linearVelocity=Vector3.zero;
+        transform.position=new Vector3(0,transform.position.y,playerId);
+        // c = StartCoroutine(colCoolDown(cooldown));
+        Invoke("coold",cooldown);
+        gameObject.SetActive(false);
     }
+    void coold()
+    {
+        collisionCar = false;  
+        gameObject.SetActive(true);
+        // c = null;
+    }
+    
+    // Coroutine c;
+    // IEnumerator colCoolDown(float cl)
+    // {
+    //     yield return new WaitForSeconds(cl);
+    //     collisionCar = false;  
+    //     gameObject.SetActive(true);
+    //     c = null;
+    // }
 
     void takeNPC()
     {

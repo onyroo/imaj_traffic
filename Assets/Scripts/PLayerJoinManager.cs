@@ -22,7 +22,6 @@ public class PlayerJoinManager : MonoBehaviour
 
     void Awake()
     {
-        Application.targetFrameRate = 150;
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -37,6 +36,7 @@ public class PlayerJoinManager : MonoBehaviour
 
     public void ChangeScene(int sceneIndex)
     {
+        // Application.targetFrameRate = 150;
         StartCoroutine(ChangeSceneAnim(sceneIndex));
     }
 
@@ -130,8 +130,8 @@ public class PlayerJoinManager : MonoBehaviour
         if(gamepads.Count>=1)
             MenuManager.Instance.playersJoined(gamepads.Count);
 
-        // if(gamepads.Count>1)
-        //     ChangeScene(4);
+        if(gamepads.Count>1)
+            ChangeScene(4);
         
         Debug.Log($"Player {index} Joined with {pad.displayName}");
 
@@ -144,15 +144,15 @@ public class PlayerJoinManager : MonoBehaviour
 
     public PlayerInputProperties playerInputSet(int playerId)
     {
-        return gamepads[players[playerId]];
-        //  return gamepads[playerId];
+        // return gamepads[players[playerId]];
+         return gamepads[playerId];
     }
 
     public Gamepad GetGamepad(int playerId)
     {
         if (playerId < 0 || playerId >= pads.Count) return null;
-        return pads[players[playerId]];
-        // return pads[playerId];
+        // return pads[players[playerId]];
+        return pads[playerId];
     }
 
     public int playerCount()
