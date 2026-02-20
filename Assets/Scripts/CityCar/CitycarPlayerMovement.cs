@@ -69,7 +69,7 @@ public class CitycarPlayerMovement : MonoBehaviour
     void OnGas(float a)
     {
         gasInput = Mathf.Clamp01(a);
-        Debug.Log(gasInput);
+        // Debug.Log(gasInput);
     }
 
     public void OnMove(Vector2 s)

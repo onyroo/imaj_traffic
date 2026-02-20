@@ -22,7 +22,7 @@ public class PlayerJoinManager : MonoBehaviour
 
     void Awake()
     {
-        // Application.targetFrameRate = 70;
+        Application.targetFrameRate = 150;
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -131,6 +131,7 @@ public class PlayerJoinManager : MonoBehaviour
             MenuManager.Instance.playersJoined(gamepads.Count);
 
         // if(gamepads.Count>1)
+        //     ChangeScene(4);
         
         Debug.Log($"Player {index} Joined with {pad.displayName}");
 

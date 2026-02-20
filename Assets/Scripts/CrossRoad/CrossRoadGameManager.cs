@@ -8,6 +8,7 @@ public class CrossRoadGameManager : MonoBehaviour
      public static CrossRoadGameManager Instance;
 
     [Header("UI")]
+    [SerializeField] private GameObject finishPanel;
     [SerializeField] private Text bluePlayerTxt;
     [SerializeField] private Text redPlayerTxt;
     // [SerializeField] private GameObject bluePlayerSprite;
@@ -122,6 +123,8 @@ public class CrossRoadGameManager : MonoBehaviour
         {
             finish = true;
             Debug.Log("Game Finished");
+            finishPanel.SetActive(true);
+            finishPanel.GetComponent<ShowScorePanel>().PopUp(redPlayerScore,bluePlayerScore);
             yield break;
         }
 
