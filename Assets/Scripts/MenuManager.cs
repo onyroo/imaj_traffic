@@ -17,10 +17,11 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private Slider slider1, slider2;
     [SerializeField] private RTLTextMeshPro nameText;
     [SerializeField] private GameObject textHelper;
+    [SerializeField] private AudioSource clickSound,hoverSound;
     // [SerializeField] private Button playButton;
     private string playerName1,playerName2; 
     CarGameDatabase database;
-
+    
     void Awake()
     {
   
@@ -28,7 +29,7 @@ public class MenuManager : MonoBehaviour
         database = new CarGameDatabase();
         // playButton.Press;
     }
-
+    
     private void Start()
     {
      
@@ -37,7 +38,15 @@ public class MenuManager : MonoBehaviour
         slider1.value = 1;
         slider2.value = 0;
     }
+    public void _playClickSound()
+    {
+        clickSound.Play();
+    }
 
+    public void _playHoverSound()
+    {
+        hoverSound.Play();
+    }
     void Update()
     {
         for (int i = 0; i < Gamepad.all.Count; i++)
@@ -46,15 +55,18 @@ public class MenuManager : MonoBehaviour
 
             if (pad.buttonSouth.wasPressedThisFrame)
             {
-                Debug.Log($"Button A pressed by Player {i} ({pad.displayName})");
+                // Debug.Log($"Button A pressed by Player {i} ({pad.displayName})");
+                _playClickSound();
             }
 
             if (pad.buttonEast.wasPressedThisFrame)
             {
-                Debug.Log($"Button B pressed by Player {i} ({pad.displayName})");
+                // Debug.Log($"Button B pressed by Player {i} ({pad.displayName})");
                 if(scoreBoardPanel.activeSelf)
                 {
                     scoreBoardPanel.SetActive(false);
+                    
+                    _playClickSound();
                     PLayPanel.SetActive(true);
                 }
             }
@@ -90,10 +102,12 @@ public class MenuManager : MonoBehaviour
     {
         if(a==1)
         {
+        
             playerSide1.SetActive(true);
         }
         else if(a>1)
         {
+        
             playerSide2.SetActive(true);
         // EventSystem.current.SetSelectedGameObject(playButton);
         }
@@ -105,6 +119,7 @@ public class MenuManager : MonoBehaviour
     int nextPanelText;
     public void SetName(string s)
     {
+        
         if(nextPanelText==0)
         {
             playerName1+=s;
@@ -123,6 +138,7 @@ public class MenuManager : MonoBehaviour
     }
     public void RemoveName()
     {
+        
         if (nextPanelText == 0)
         {
             if (playerName1.Length > 0)
@@ -231,8 +247,9 @@ public class MenuManager : MonoBehaviour
     IEnumerator ChangeSlider(int playerId, int direction)
     {
         Slider s = (playerId == 0) ? slider1 : slider2;
-        if(s.value==1||s.value==0)
+        if((s.value==1&&(direction < 0))||(s.value==0&&(direction > 0))&&sidePanel.activeSelf)
         {
+        _playHoverSound();
         float target = (direction > 0) ? 1f : 0f;
         float startValue = s.value;
         float t = 0f;

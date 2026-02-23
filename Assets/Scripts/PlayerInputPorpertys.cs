@@ -8,6 +8,8 @@ public class PlayerInputProperties : MonoBehaviour
 
     public event Action OnWestPressed;
     public event Action OnNorthPressed;
+    public event Action OnSouthReleased;
+    public event Action OnSouthPressed;
     public event Action<Vector2> OnMoveInput;
     // public event Action OnRTHold;
     public event Action<float> OnRTValueChanged;  
@@ -56,6 +58,18 @@ public class PlayerInputProperties : MonoBehaviour
         }
     }
 
+    public void OnSouth(InputAction.CallbackContext ctx)
+    {
+        if (ctx.started)
+        {
+            OnSouthPressed?.Invoke();
+        }
+        else if(ctx.canceled)
+        {
+            OnSouthReleased?.Invoke();
+        }
+    }
+ 
 
     public void OnRT(InputAction.CallbackContext ctx)
     {

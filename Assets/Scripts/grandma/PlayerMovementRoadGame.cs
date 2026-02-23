@@ -20,6 +20,7 @@ public class PlayerMovementRoadGame : MonoBehaviour
     [SerializeField] private Texture t1,t2;
     [SerializeField] private float rotationSpeed = 12f;
     [SerializeField] private Animator anim;
+    [SerializeField] private AudioSource peekSound,takeDownSound;
     private int countCall;
 
     [Header("Refs")]
@@ -144,6 +145,7 @@ public class PlayerMovementRoadGame : MonoBehaviour
             Invoke("doCoolDownGrandaTheft",grandmaTheftCoolown);
             grandmaEnemy.parent.GetComponent<PlayerMovementRoadGame>().grandmaTakeDown();
         }
+        peekSound.Play();
         GrandmaProperty gp = grandmaEnemy.GetComponent<GrandmaProperty>();
         grandmaAnim=gp.animReturn();
         grandma = grandmaEnemy;
@@ -312,12 +314,13 @@ attackCl=false;
             grandma.GetComponent<GrandmaProperty>().canMove = true;
             grandma=null;
             cl.enabled=false;
- 
+            takeDownSound.Play();
     }
 
     public void grandmaTakeDown()
     {
         if (!hasGrandma) return;
+        takeDownSound.Play();
         hasGrandma = false;
         grandma.GetComponent<Rigidbody>().constraints =
             RigidbodyConstraints.FreezePositionY |

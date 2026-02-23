@@ -20,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/game test 4.unity
     guid: b856d6e867148094b988f90bd4f89362
+  - enabled: 1
+    path: Assets/Scenes/Plathformer.unity
+    guid: 3fb3e14818b5a3345a57b765122b062f
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

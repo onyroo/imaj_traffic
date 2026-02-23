@@ -133,6 +133,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 5754105379076831762}
+        m_TargetAssemblyTypeName: PlayerInputProperties, Assembly-CSharp
+        m_MethodName: OnSouth
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: a8df4c68-8583-4420-9e0d-8ef29d4df73d
     m_ActionName: 'AllGames/OnSouth[/XInputControllerWindows/buttonSouth,/XInputControllerWindows1/buttonSouth]'
   m_NeverAutoSwitchControlSchemes: 0

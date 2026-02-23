@@ -38,6 +38,7 @@ public class GrandmaGameManager : MonoBehaviour
     [Header("Player Reset Points")]
     public Transform player1ResetPoint;
     public Transform player2ResetPoint;
+    
 
     [Header("UI")]
     [SerializeField] private Text bluePlayerText;
@@ -48,6 +49,7 @@ public class GrandmaGameManager : MonoBehaviour
     [SerializeField] private int playerDiedScore;
     [SerializeField] private int grandmaDiedScore;
     [SerializeField] private int timePlay=60;
+    [SerializeField] private AudioSource collisionSound;
     private int bluePlayerScore;
     private int redPlayerScore;
 
@@ -203,7 +205,10 @@ private IEnumerator CarGenerator()
 // }
 
 
-
+    public void _dieSound()
+    {
+        collisionSound.Play();
+    }
     private GameObject GetRandomCarByChance()
     {
         float totalChance = 0f;
@@ -260,6 +265,7 @@ private IEnumerator CarGenerator()
 
     public void ResetPlayerPosition(Transform player, int side)
     {
+        _dieSound();
         AddScore(side,-playerDiedScore);
         player.GetChild(0).gameObject.SetActive(false);
         player.position = new Vector3(100, 0, 100);
@@ -313,6 +319,7 @@ private IEnumerator CarGenerator()
     public void ResetGrandmaPosition(Transform grandma, int side,int playerId)
     {
         AddScore(playerId,-grandmaDiedScore);
+        _dieSound();
         
         if(playerId==0)
         {
