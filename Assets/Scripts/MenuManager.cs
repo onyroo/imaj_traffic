@@ -7,6 +7,7 @@ using System.Collections;
 public class MenuManager : MonoBehaviour
 {
     public static MenuManager Instance { get; private set; }
+    [SerializeField] private int levelCount=2;
     [SerializeField] private GameObject scoreBoardPanel;
     [SerializeField] private GameObject playerSide1,playerSide2;
     [SerializeField] private GameObject playerIconName1,playerIconName2;
@@ -34,7 +35,12 @@ public class MenuManager : MonoBehaviour
     {
      
         playersJoined(PlayerJoinManager.Instance.playerCount());
-
+        for (int i = 0; i < levelCount; i++)
+        {
+        PlayerPrefs.SetInt("level" + i.ToString(), 0);
+        PlayerPrefs.Save();
+            
+        }
         slider1.value = 1;
         slider2.value = 0;
     }
@@ -207,8 +213,8 @@ public class MenuManager : MonoBehaviour
             database.SetPlayerInfo(playerName2,0);
             PlayerPrefs.SetString("player1",playerName1);
             PlayerPrefs.SetString("player2",playerName2);
-            PlayerPrefs.SetFloat("player1Score", 0f);
-            PlayerPrefs.SetFloat("player2Score", 0f);
+            PlayerPrefs.SetInt("player1Score", 0);
+            PlayerPrefs.SetInt("player2Score", 0);
             PlayerPrefs.Save();
             PlayerJoinManager.Instance.SetGamePadForUI(0);
 
@@ -254,7 +260,7 @@ public class MenuManager : MonoBehaviour
         float startValue = s.value;
         float t = 0f;
 
-        while (!Mathf.Approximately(s.value, target))
+        while (t<0.98f&&t>=0)
         {
             t += Time.deltaTime * 4f;  
             s.value = Mathf.Lerp(startValue, target, t);

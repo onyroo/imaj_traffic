@@ -11,6 +11,8 @@ public class PlathformerPlayer : MonoBehaviour
     [SerializeField] private float acceleration = 20f;
     [SerializeField] private float deceleration = 25f;
     [SerializeField] private float maxSpeed = 6f;
+    [SerializeField] private float minSpeed = 2f;
+    float mainSpeed;
     [SerializeField] private float rotationSpeed = 12f;
 
     [Header("Jump")]
@@ -63,6 +65,7 @@ public class PlathformerPlayer : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.interpolation = RigidbodyInterpolation.Interpolate;
         rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+        mainSpeed=maxSpeed;
     }
 
     public void OnMove(Vector2 input)
@@ -126,21 +129,36 @@ public class PlathformerPlayer : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Finish"))
+        if (other.CompareTag("Finish")||other.CompareTag("car"))
         {
             transform.position = savePoint.position;
-        }
-        else if (other.CompareTag("car"))
-        {
-            transform.position = savePoint.position;
+             plathformerManager.Instance._RemoveScore(playerId);
         }
         else if (other.CompareTag("side"))
         {
             other.gameObject.SetActive(false);
-            plathformerManager.Instance._SpawnCoin();
+            plathformerManager.Instance._AddScore(playerId);
+        }
+        else if (other.CompareTag("SafeWay"))
+        {
+            slowSpeed++;
+            if(slowSpeed>0)
+                mainSpeed=minSpeed;
+        }
+        else if(other.CompareTag("Win"))
+        {
+            plathformerManager.Instance._checkWin(playerId);
         }
     }
-
+    int slowSpeed=0;
+    private void OnTriggerExit(Collider other) {
+        if (other.CompareTag("SafeWay"))
+        {
+            slowSpeed--;
+            if(slowSpeed==0)  
+                mainSpeed=maxSpeed;
+        }
+    }
     private void FixedUpdate()
     {
         if (!canMove) return;
@@ -151,7 +169,7 @@ public class PlathformerPlayer : MonoBehaviour
         float dt = Time.fixedDeltaTime;
 
         Vector3 targetVelocity =
-            new Vector3(moveInput.x, 0f, moveInput.y) * maxSpeed;
+            new Vector3(moveInput.x, 0f, moveInput.y) * mainSpeed;
 
         if (moveInput.sqrMagnitude > 0.01f && isGrounded)
         {
