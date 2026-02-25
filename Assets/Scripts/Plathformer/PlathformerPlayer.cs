@@ -93,11 +93,12 @@ public class PlathformerPlayer : MonoBehaviour
     void CheckGround()
     {
         if (groundCheck == null) return;
-
+    
         isGrounded = Physics.CheckSphere(
             groundCheck.position,
             groundRadius,
-            groundLayer
+            groundLayer,
+            QueryTriggerInteraction.Ignore
         );
     }
 
@@ -129,15 +130,18 @@ public class PlathformerPlayer : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        // Debug.Log(other.name);
         if (other.CompareTag("Finish")||other.CompareTag("car"))
         {
             transform.position = savePoint.position;
+            rb.linearVelocity=Vector3.zero;
+            rb.position=savePoint.position;
              plathformerManager.Instance._RemoveScore(playerId);
         }
         else if (other.CompareTag("side"))
         {
             other.gameObject.SetActive(false);
-            plathformerManager.Instance._AddScore(playerId);
+            plathformerManager.Instance._AddScore(playerId,other.gameObject);
         }
         else if (other.CompareTag("SafeWay"))
         {

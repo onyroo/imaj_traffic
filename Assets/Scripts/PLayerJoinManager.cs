@@ -85,7 +85,7 @@ public class PlayerJoinManager : MonoBehaviour
         
             if (uiModule == null) return;
         
-            // همه device ها غیرفعال → فقط این گیم پد فعال
+             
             if (uiModule.actionsAsset != null)
             {
                 uiModule.actionsAsset.devices = new InputDevice[]
