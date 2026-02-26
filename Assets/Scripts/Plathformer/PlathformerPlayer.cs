@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-
+using System.Collections;
+using System.Collections.Generic;
 [RequireComponent(typeof(Rigidbody))]
 public class PlathformerPlayer : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class PlathformerPlayer : MonoBehaviour
 
     [Header("Movement")]
     [SerializeField] private float acceleration = 20f;
-    [SerializeField] private float deceleration = 25f;
+    // [SerializeField] private float deceleration = 25f;
     [SerializeField] private float maxSpeed = 6f;
     [SerializeField] private float minSpeed = 2f;
     float mainSpeed;
@@ -27,11 +28,18 @@ public class PlathformerPlayer : MonoBehaviour
     [Header("Better Jump Physics")]
     [SerializeField] private float fallMultiplier = 2.5f;
     [SerializeField] private float lowJumpMultiplier = 4f;
-
+    [SerializeField] private float peekCoolDownTime=1;
+    [SerializeField] private float dieCoolDownTime=2;
     [Header("References")]
     [SerializeField] private Transform body;
+    [SerializeField] private Transform hande;
+
     [SerializeField] private Animator anim;
     [SerializeField] private Transform savePoint;
+
+    [SerializeField] private AudioSource grabSFX;
+    [SerializeField] private AudioSource dropSFX;
+
 
     private Rigidbody rb;
     private Vector2 moveInput;
@@ -127,21 +135,31 @@ public class PlathformerPlayer : MonoBehaviour
                 Time.fixedDeltaTime;
         }
     }
-
+    GameObject trash;
     private void OnTriggerEnter(Collider other)
     {
         // Debug.Log(other.name);
         if (other.CompareTag("Finish")||other.CompareTag("car"))
         {
-            transform.position = savePoint.position;
-            rb.linearVelocity=Vector3.zero;
-            rb.position=savePoint.position;
-             plathformerManager.Instance._RemoveScore(playerId);
+            // transform.position = savePoint.position;
+            // rb.linearVelocity=Vector3.zero;
+            // rb.position=savePoint.position;
+            StartCoroutine(dieCoolDown());
+            plathformerManager.Instance._RemoveScore(playerId);
         }
         else if (other.CompareTag("side"))
         {
-            other.gameObject.SetActive(false);
-            plathformerManager.Instance._AddScore(playerId,other.gameObject);
+            // other.gameObject.SetActive(false);
+            if(trash!=null||!canPeek)return;
+            if(other.gameObject.transform.parent!=null&&other.gameObject.transform.root!=gameObject)
+            {
+                other.gameObject.transform.root.GetComponent<PlathformerPlayer>()?._takeDowntrash();
+            }
+            trash=other.gameObject;
+            trash.transform.position=transform.position+body.right;
+            trash.transform.localRotation=hande.rotation;
+            trash.transform.parent=hande;
+            grabSFX.Play();
         }
         else if (other.CompareTag("SafeWay"))
         {
@@ -151,8 +169,45 @@ public class PlathformerPlayer : MonoBehaviour
         }
         else if(other.CompareTag("Win"))
         {
-            plathformerManager.Instance._checkWin(playerId);
+            // plathformerManager.Instance._checkWin(playerId);
+            if(trash==null)return;
+            trash.SetActive(false);
+            plathformerManager.Instance._AddScore(playerId,trash);
+            _takeDowntrash();
         }
+    }
+    IEnumerator peekCoolDown()
+    {
+        canPeek=false;
+        yield return new WaitForSeconds(peekCoolDownTime);
+        canPeek=true;
+    }
+
+    IEnumerator dieCoolDown()
+    {
+        _takeDowntrash();
+        body.gameObject.SetActive(false);
+        transform.position = new Vector3(0,100,0);
+        canMove=false;
+        yield return new WaitForSeconds(dieCoolDownTime);
+        transform.position = savePoint.position;
+        rb.linearVelocity=Vector3.zero;
+        rb.position=savePoint.position;
+        slowSpeed=0;
+        mainSpeed=maxSpeed;
+        body.gameObject.SetActive(true);
+        canMove=true;
+    }
+    bool canPeek=true;
+    public void _takeDowntrash()
+    {
+        if (trash == null)
+            return;
+        dropSFX.Play();
+        StartCoroutine(peekCoolDown());
+    
+        trash.transform.SetParent(null);
+        trash = null;
     }
     int slowSpeed=0;
     private void OnTriggerExit(Collider other) {

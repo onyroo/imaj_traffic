@@ -19,7 +19,9 @@ public class plathformerManager : MonoBehaviour
     [SerializeField] private int CarSpawnCount = 10;  
     [SerializeField] private GameObject clearCars;
     [SerializeField] private List<GameObject> coins = new();
-    [SerializeField] private List<GameObject> coinsActive = new();
+    [SerializeField] private List<GameObject> coinsPoint = new();
+
+    [SerializeField] private List<GameObject> activePoint = new();
     [SerializeField] private Text scoreText1, scoreText2;
     [SerializeField] private Image lightRoad1, lightRoad2, lightRoad3, lightRoad4;
     [SerializeField] private Image safeWay1, safeWay2, safeWay3, safeWay4;
@@ -43,6 +45,7 @@ public class plathformerManager : MonoBehaviour
     private float _cachedCamZ;
     private float _initialCamX;
     private bool _camInit = false;
+    [SerializeField] private AudioSource carHit;
 
     private void Awake()
     {
@@ -53,48 +56,22 @@ public class plathformerManager : MonoBehaviour
     void Start()
     {
         StartCoroutine(spawnRandomCar());
-        _SpawnCoin();
-        _SpawnCoin();
-        _SpawnCoin();
+        foreach(var c in coins)
+        {
+            int r=Random.Range(0,coinsPoint.Count);
+
+            c.transform.position=coinsPoint[r].transform.position;
+            activePoint.Add(coinsPoint[r]);
+            coinsPoint.Remove(coinsPoint[r]);
+            c.SetActive(true);
+        }
+        // _SpawnCoin();
+        // _SpawnCoin();
+        // _SpawnCoin();
     }
 
     int r = 0;
-void checkCarBugs()
-{
-    if (clearCars == null) return;
 
-    // گرفتن همه کلایدرها داخل clearCars
-    Collider[] collidersToCheck = clearCars.GetComponentsInChildren<Collider>();
-
-    foreach (var col in collidersToCheck)
-    {
-        if (col == null) continue;
-
-        Collider[] hits = Physics.OverlapBox(
-            col.transform.position,
-            col.transform.localScale * 0.5f,
-            col.transform.rotation
-        );
-
-        foreach (var hit in hits)
-        {
-            if (hit.CompareTag("Car"))
-            {
-                CrossRoadCar car = hit.GetComponent<CrossRoadCar>();
-                if (car != null)
-                {
-                    // حذف از لیست‌ها
-                    playerCars1.Remove(car);
-                    playerCars2.Remove(car);
-                    playerCars3.Remove(car);
-                    playerCars4.Remove(car);
-
-                    Destroy(hit.gameObject);
-                }
-            }
-        }
-    }
-}
     IEnumerator spawnRandomCar()
     {
         for (int c = 0; c < 4; c++)
@@ -107,7 +84,7 @@ void checkCarBugs()
         }
         while (true)  
         {
-            checkCarBugs();
+            // checkCarBugs();
             for (int c = 0; c < 5; c++)
             {
                 InstanceCar(r);
@@ -167,6 +144,9 @@ void checkCarBugs()
                 SetAlpha(safeWay4, 0.3f);
             }
             yield return new WaitForSeconds(0.2f);
+            clearCars.SetActive(true);
+            yield return new WaitForSeconds(0.5f);
+            clearCars.SetActive(false);
             for (int c = 0; c < CarSpawnCount; c++)
             {
                 InstanceCarAuto(r);
@@ -176,12 +156,41 @@ void checkCarBugs()
             yield return new WaitForSeconds(1f);
         }
     }
+    public void _removeCar(GameObject g)
+    {
+        if (g == null) return;
 
+        CrossRoadCar car = g.GetComponent<CrossRoadCar>();
+        if (car == null) return;
+
+        if (playerCars1.Contains(car))
+            playerCars1.Remove(car);
+
+        if (playerCars2.Contains(car))
+            playerCars2.Remove(car);
+
+        if (playerCars3.Contains(car))
+            playerCars3.Remove(car);
+
+        if (playerCars4.Contains(car))
+            playerCars4.Remove(car);
+
+        Destroy(g);
+    }
     public void _AddScore(int PlayerId,GameObject g)
     {
-        _SpawnCoin();
-        coinsActive.Remove(g);
-        coins.Add(g);
+        // _SpawnCoin();
+        coinsPoint.Add(activePoint[coins.IndexOf(g)]);
+        activePoint.Remove(coinsPoint[coins.IndexOf(g)]);
+        int r=Random.Range(0,coinsPoint.Count);
+        g.transform.position=coinsPoint[r].transform.position;
+        g.transform.rotation=coinsPoint[r].transform.rotation;
+        activePoint.Add(coinsPoint[r]);
+        coinsPoint.Remove(coinsPoint[r]);
+
+        g.SetActive(true);
+        // coinsActive.Remove(g);
+        // coins.Add(g);
         if (PlayerId == 0)
         {
             score1++;
@@ -194,7 +203,10 @@ void checkCarBugs()
         }
     }
 
-    public void _RemoveScore(int PlayerId) { }
+    public void _RemoveScore(int PlayerId)
+    {
+        carHit.Play();
+    }
 
     public void _checkWin(int playerID)
     {
@@ -212,7 +224,7 @@ void checkCarBugs()
     {
         GameObject g = Instantiate(carObj[Random.Range(0, carObj.Count)], new Vector3(100, 100, 100), Quaternion.identity);
         CrossRoadCar c = g.GetComponent<CrossRoadCar>();
-        Destroy(g,10);
+        // Destroy(g,10);
 
         c.setDefault(playerId);
 
@@ -226,7 +238,7 @@ void checkCarBugs()
     {
         GameObject g = Instantiate(carObj[Random.Range(0, carObj.Count)], new Vector3(100, 100, 100), Quaternion.identity);
         CrossRoadCar c = g.GetComponent<CrossRoadCar>();
-        Destroy(g,14);
+        // Destroy(g,14);
         c.setDefault(playerIdTurn);
 
         if (playerIdTurn == 0) { playerCars1.Add(c); if (playerSplines1.Count > 0) c.TakeMove(playerSplines1[0]); }
@@ -237,11 +249,11 @@ void checkCarBugs()
 
     public void _SpawnCoin()
     {
-        if (coins.Count == 0) return;
-        int i=Random.Range(0, coins.Count);
-        coins[i].SetActive(true);
-        coinsActive.Add(coins[i]);
-        coins.RemoveAt(i);
+        // if (coins.Count == 0) return;
+        // int i=Random.Range(0, coins.Count);
+        // coins[i].SetActive(true);
+        // coinsActive.Add(coins[i]);
+        // coins.RemoveAt(i);
     }
 
     void SetAlpha(Image img, float targetAlpha)

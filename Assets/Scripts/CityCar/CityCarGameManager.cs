@@ -10,7 +10,7 @@ public class CityCarGameManager : MonoBehaviour
     [SerializeField] float maxOrthoSize = 100f;
     [SerializeField] float zoomSpeed = 5f;
     [SerializeField] float moveSpeed = 5f;
-    [SerializeField] float edgePadding = 3f;
+    // [SerializeField] float edgePadding = 3f;
 
     void LateUpdate()
     {
